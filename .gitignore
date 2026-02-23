@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Backend data (user-specific)
+backend/data/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Tauri
+src-tauri/target/
+src-tauri/binaries/*.exe
+src-tauri/gen/
+
+# PyInstaller
+*.spec
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+test-data/
