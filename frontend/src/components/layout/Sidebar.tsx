@@ -9,7 +9,7 @@ import { Dialog, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { TagSettings } from '@/components/layout/TagSettings'
 import { KISettings } from '@/components/layout/KISettings'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
-import { Handshake, LayoutDashboard, Users, FolderKanban, Plus, Search, Settings, Bot, Play, Trash2, Shield, LogOut, KeyRound, Eye, EyeOff } from 'lucide-react'
+import { Handshake, LayoutDashboard, Users, FolderKanban, Plus, Search, Settings, Bot, Play, Trash2, Shield, LogOut, KeyRound, Eye, EyeOff, Database } from 'lucide-react'
 import type { Employee, Project } from '@/types'
 
 interface SidebarProps {
@@ -82,6 +82,15 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
       localStorage.removeItem('teamlead-tour-dashboard')
       localStorage.removeItem('teamlead-tour-employee')
       localStorage.removeItem('teamlead-tour-jourfix')
+      queryClient.invalidateQueries()
+    } catch (e) {
+      alert('Fehler: ' + (e as Error).message)
+    }
+  }
+
+  const handleLoadDemo = async () => {
+    try {
+      await api.loadDemoData()
       queryClient.invalidateQueries()
     } catch (e) {
       alert('Fehler: ' + (e as Error).message)
@@ -308,6 +317,15 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
           >
             <Trash2 className="h-4 w-4" />
             Demo-Daten entfernen
+          </button>
+        )}
+        {demoStatus?.isEmpty && !demoStatus?.demoDataLoaded && (
+          <button
+            onClick={handleLoadDemo}
+            className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-blue-400 hover:bg-blue-500/10 hover:text-blue-300 transition-colors w-full"
+          >
+            <Database className="h-4 w-4" />
+            Demo-Daten laden
           </button>
         )}
         {onStartTour && (

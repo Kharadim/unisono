@@ -24,8 +24,8 @@ app.add_middleware(
 @app.middleware("http")
 async def auth_middleware(request: Request, call_next):
     path = request.url.path
-    # Skip auth for: non-API routes, auth endpoints, photo serving
-    if not path.startswith("/api/") or path.startswith("/api/auth/"):
+    # Skip auth for: non-API routes, auth endpoints, CORS preflight
+    if not path.startswith("/api/") or path.startswith("/api/auth/") or request.method == "OPTIONS":
         return await call_next(request)
     # Check if password is set — if not, allow all (first-time setup)
     conn = get_db()
