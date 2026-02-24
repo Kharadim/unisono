@@ -9,7 +9,7 @@ import { Dialog, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { TagSettings } from '@/components/layout/TagSettings'
 import { KISettings } from '@/components/layout/KISettings'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
-import { Handshake, LayoutDashboard, Users, FolderKanban, Plus, Search, Settings, Bot, Play, Trash2, Shield, LogOut, KeyRound, Eye, EyeOff, Database } from 'lucide-react'
+import { Handshake, LayoutDashboard, Users, FolderKanban, Plus, Search, Settings, Bot, Play, Trash2, Shield, LogOut, KeyRound, Eye, EyeOff, Database, UserPen } from 'lucide-react'
 import type { Employee, Project } from '@/types'
 
 interface SidebarProps {
@@ -26,6 +26,8 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
   const [showKISettings, setShowKISettings] = useState(false)
   const [showDeleteDemo, setShowDeleteDemo] = useState(false)
   const [showChangePassword, setShowChangePassword] = useState(false)
+  const [showChangeName, setShowChangeName] = useState(false)
+  const [editedUsername, setEditedUsername] = useState('')
   const [newName, setNewName] = useState('')
   const [newRole, setNewRole] = useState('')
 
@@ -78,7 +80,7 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
     try {
       await api.deleteDemoData()
       setShowDeleteDemo(false)
-      localStorage.removeItem('teamlead-user-name')
+      localStorage.removeItem('teamlead-username')
       localStorage.removeItem('teamlead-tour-dashboard')
       localStorage.removeItem('teamlead-tour-employee')
       localStorage.removeItem('teamlead-tour-jourfix')
@@ -298,6 +300,16 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
           <KeyRound className="h-4 w-4" />
           Passwort aendern
         </button>
+        <button
+          onClick={() => {
+            setEditedUsername(localStorage.getItem('teamlead-username') || '')
+            setShowChangeName(true)
+          }}
+          className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-sidebar-muted-foreground hover:bg-sidebar-accent hover:text-white transition-colors w-full"
+        >
+          <UserPen className="h-4 w-4" />
+          Name aendern
+        </button>
         <Link
           to="/datenschutz"
           onClick={handleLink}
@@ -415,6 +427,39 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
             </div>
           </div>
         )}
+      </Dialog>
+
+      {/* Change Name Dialog */}
+      <Dialog open={showChangeName} onClose={() => setShowChangeName(false)}>
+        <DialogHeader>
+          <DialogTitle>Name aendern</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-3">
+          <Input
+            placeholder="Dein Name"
+            value={editedUsername}
+            onChange={e => setEditedUsername(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' && editedUsername.trim()) {
+                localStorage.setItem('teamlead-username', editedUsername.trim())
+                setShowChangeName(false)
+              }
+            }}
+            autoFocus
+          />
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setShowChangeName(false)}>Abbrechen</Button>
+            <Button
+              onClick={() => {
+                localStorage.setItem('teamlead-username', editedUsername.trim())
+                setShowChangeName(false)
+              }}
+              disabled={!editedUsername.trim()}
+            >
+              Speichern
+            </Button>
+          </div>
+        </div>
       </Dialog>
 
       {/* Quick Add Employee Dialog */}
