@@ -67,11 +67,8 @@ def load_demo_data(template: str = Query(default="marketing")):
     return {"ok": True, "message": "Demo-Daten erfolgreich geladen"}
 
 
-@router.delete("/api/demo-data")
-def delete_demo_data():
-    db = get_db()
-
-    # Delete in correct FK order (children before parents)
+def _clear_all_data(db):
+    """Delete all user data (employees, projects, etc.) from the database."""
     tables = [
         "dev_trainings",
         "dev_measures",
@@ -103,6 +100,11 @@ def delete_demo_data():
     # Delete demo photo files from disk
     delete_demo_photos()
 
+
+@router.delete("/api/demo-data")
+def delete_demo_data():
+    db = get_db()
+    _clear_all_data(db)
     db.execute(
         "INSERT OR REPLACE INTO settings (key, value) VALUES ('demo_data_loaded', 'false')"
     )

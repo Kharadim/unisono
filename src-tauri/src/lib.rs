@@ -97,6 +97,13 @@ pub fn run() {
             Ok(())
         })
         .on_window_event(|window, event| {
+            if let tauri::WindowEvent::CloseRequested { .. } = event {
+                // Inject shutdown flag before window closes — prevents
+                // the frontend from reloading into "Backend wird gestartet..."
+                if let Some(wv) = window.get_webview_window("main") {
+                    let _ = wv.eval("window.__UNISONO_SHUTTING_DOWN__ = true");
+                }
+            }
             if let tauri::WindowEvent::Destroyed = event {
                 // Graceful shutdown: send SHUTDOWN to sidecar STDIN
                 let state = window.state::<SidecarState>();

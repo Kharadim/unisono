@@ -43,7 +43,9 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   if (res.status === 204) return undefined as T
   if (res.status === 401) {
     clearAuthToken()
-    window.location.reload()
+    if (!(window as any).__UNISONO_SHUTTING_DOWN__) {
+      window.location.reload()
+    }
     throw new Error('Sitzung abgelaufen')
   }
   if (!res.ok) {
@@ -193,7 +195,7 @@ export const api = {
   toggleDevTraining: (id: number) => request<any>(`/devplan/trainings/${id}/toggle`, { method: 'PATCH' }),
 
   // Demo Data
-  getDemoDataStatus: () => request<{ isEmpty: boolean; demoDataLoaded: boolean; welcomeDismissed: boolean }>('/demo-data/status'),
+  getDemoDataStatus: () => request<{ isEmpty: boolean; demoDataLoaded: boolean; welcomeDismissed: boolean; template: string | null }>('/demo-data/status'),
   loadDemoData: (template?: string) =>
     request<any>(`/demo-data/load${template ? `?template=${template}` : ''}`, { method: 'POST' }),
   deleteDemoData: () => request<any>('/demo-data', { method: 'DELETE' }),

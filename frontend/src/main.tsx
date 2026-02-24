@@ -50,6 +50,8 @@ function TauriGate({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (ready) return
+    // Don't poll during shutdown
+    if ((window as any).__UNISONO_SHUTTING_DOWN__) return
     const interval = setInterval(() => {
       if ((window as any).__UNISONO_PORT__) {
         setReady(true)
@@ -60,6 +62,10 @@ function TauriGate({ children }: { children: React.ReactNode }) {
   }, [ready])
 
   if (!ready) {
+    // During shutdown, show nothing (window is closing anyway)
+    if ((window as any).__UNISONO_SHUTTING_DOWN__) {
+      return <div style={{ height: '100vh', background: '#f8f9fa' }} />
+    }
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#f8f9fa' }}>
         <div style={{ textAlign: 'center', color: '#6b7280' }}>
