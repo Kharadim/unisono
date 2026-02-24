@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, clearAuthToken, setAuthToken } from '@/lib/api'
 import { Avatar } from '@/components/ui/avatar'
@@ -9,6 +9,7 @@ import { Dialog, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { TagSettings } from '@/components/layout/TagSettings'
 import { KISettings } from '@/components/layout/KISettings'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
+import { TemplatePickerDialog } from '@/components/dashboard/TemplatePickerDialog'
 import { Handshake, LayoutDashboard, Users, FolderKanban, Plus, Search, Settings, Bot, Play, Trash2, Shield, LogOut, KeyRound, Eye, EyeOff, Database, UserPen } from 'lucide-react'
 import type { Employee, Project } from '@/types'
 
@@ -19,12 +20,14 @@ interface SidebarProps {
 
 export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
   const location = useLocation()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
   const [showNewEmployee, setShowNewEmployee] = useState(false)
   const [showTagSettings, setShowTagSettings] = useState(false)
   const [showKISettings, setShowKISettings] = useState(false)
   const [showDeleteDemo, setShowDeleteDemo] = useState(false)
+  const [showTemplatePicker, setShowTemplatePicker] = useState(false)
   const [showChangePassword, setShowChangePassword] = useState(false)
   const [showChangeName, setShowChangeName] = useState(false)
   const [editedUsername, setEditedUsername] = useState('')
@@ -81,22 +84,15 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
       await api.deleteDemoData()
       setShowDeleteDemo(false)
       localStorage.removeItem('teamlead-username')
-      localStorage.removeItem('teamlead-tour-dashboard')
-      localStorage.removeItem('teamlead-tour-employee')
-      localStorage.removeItem('teamlead-tour-jourfix')
-      queryClient.invalidateQueries()
+      await queryClient.invalidateQueries()
+      navigate('/')
     } catch (e) {
       alert('Fehler: ' + (e as Error).message)
     }
   }
 
-  const handleLoadDemo = async () => {
-    try {
-      await api.loadDemoData()
-      queryClient.invalidateQueries()
-    } catch (e) {
-      alert('Fehler: ' + (e as Error).message)
-    }
+  const handleLoadDemo = () => {
+    setShowTemplatePicker(true)
   }
 
   const handleLogout = async () => {
@@ -374,6 +370,9 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
         confirmLabel="Alles loeschen"
         variant="danger"
       />
+
+      {/* Template Picker Dialog */}
+      <TemplatePickerDialog open={showTemplatePicker} onClose={() => setShowTemplatePicker(false)} />
 
       {/* Change Password Dialog */}
       <Dialog open={showChangePassword} onClose={resetChangePasswordDialog}>

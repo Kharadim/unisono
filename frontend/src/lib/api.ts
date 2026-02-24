@@ -194,7 +194,8 @@ export const api = {
 
   // Demo Data
   getDemoDataStatus: () => request<{ isEmpty: boolean; demoDataLoaded: boolean; welcomeDismissed: boolean }>('/demo-data/status'),
-  loadDemoData: () => request<any>('/demo-data/load', { method: 'POST' }),
+  loadDemoData: (template?: string) =>
+    request<any>(`/demo-data/load${template ? `?template=${template}` : ''}`, { method: 'POST' }),
   deleteDemoData: () => request<any>('/demo-data', { method: 'DELETE' }),
   dismissWelcome: () => request<any>('/demo-data/dismiss-welcome', { method: 'POST' }),
 }

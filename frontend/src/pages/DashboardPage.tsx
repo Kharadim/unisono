@@ -97,10 +97,8 @@ export function DashboardPage() {
     }
     setShowWelcome(false)
     queryClient.invalidateQueries({ queryKey: ['demo-status'] })
-    if (loadedDemo) {
-      // Reset tour flags so the tour starts for demo data
-      const tourKeys = ['teamlead-tour-dashboard', 'teamlead-tour-employee', 'teamlead-tour-jourfix']
-      tourKeys.forEach(key => localStorage.removeItem(key))
+    if (loadedDemo && !localStorage.getItem('teamlead-tour-dashboard')) {
+      // Start tour only if it was never completed before
       setShowTour(true)
     }
   }, [queryClient])

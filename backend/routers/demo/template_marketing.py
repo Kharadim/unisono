@@ -1,174 +1,19 @@
-from fastapi import APIRouter, HTTPException
-from datetime import date, timedelta, datetime
-from backend.database import get_db, PHOTOS_DIR
-import requests
-from PIL import Image, ImageDraw, ImageFont
-from pathlib import Path
-
-router = APIRouter(tags=["demo"])
+from backend.routers.demo.routes import register_template
+from backend.routers.demo.helpers import (
+    d, past, now_iso, past_datetime, generate_demo_photos,
+)
 
 
-@router.get("/api/demo-data/status")
-def demo_data_status():
-    db = get_db()
-    emp_count = db.execute("SELECT COUNT(*) as cnt FROM employees").fetchone()["cnt"]
-    demo_loaded = db.execute(
-        "SELECT value FROM settings WHERE key = 'demo_data_loaded'"
-    ).fetchone()
-    welcome_dismissed = db.execute(
-        "SELECT value FROM settings WHERE key = 'welcome_dismissed'"
-    ).fetchone()
-    db.close()
-    return {
-        "isEmpty": emp_count == 0,
-        "demoDataLoaded": demo_loaded["value"] == "true" if demo_loaded else False,
-        "welcomeDismissed": welcome_dismissed["value"] == "true" if welcome_dismissed else False,
-    }
+@register_template("marketing")
+def insert(db):
+    now = now_iso()
 
-
-@router.post("/api/demo-data/load")
-def load_demo_data():
-    db = get_db()
-    emp_count = db.execute("SELECT COUNT(*) as cnt FROM employees").fetchone()["cnt"]
-    if emp_count > 0:
-        db.close()
-        raise HTTPException(400, "Datenbank ist nicht leer. Demo-Daten koennen nur in eine leere Datenbank geladen werden.")
-
-    _insert_demo_data(db)
-
-    db.execute(
-        "INSERT OR REPLACE INTO settings (key, value) VALUES ('demo_data_loaded', 'true')"
-    )
-    db.execute(
-        "INSERT OR REPLACE INTO settings (key, value) VALUES ('welcome_dismissed', 'true')"
-    )
-    db.commit()
-    db.close()
-    return {"ok": True, "message": "Demo-Daten erfolgreich geladen"}
-
-
-@router.delete("/api/demo-data")
-def delete_demo_data():
-    db = get_db()
-
-    # Delete in correct FK order (children before parents)
-    tables = [
-        "dev_trainings",
-        "dev_measures",
-        "dev_areas",
-        "dev_strengths",
-        "development_plans",
-        "jourfix_project_notes",
-        "jourfix_agenda",
-        "kpi_history",
-        "notes",
-        "agreements",
-        "goals",
-        "status_history",
-        "kpis",
-        "milestones",
-        "project_members",
-        "jourfix_sessions",
-        "projects",
-        "employees",
-    ]
-    for table in tables:
-        db.execute(f"DELETE FROM {table}")
-
-    # Reset autoincrement counters
-    db.execute("DELETE FROM sqlite_sequence WHERE name IN ({})".format(
-        ",".join(f"'{t}'" for t in tables)
-    ))
-
-    # Delete demo photo files from disk
-    _delete_demo_photos()
-
-    db.execute(
-        "INSERT OR REPLACE INTO settings (key, value) VALUES ('demo_data_loaded', 'false')"
-    )
-    db.execute(
-        "DELETE FROM settings WHERE key = 'welcome_dismissed'"
-    )
-    db.commit()
-    db.close()
-    return {"ok": True, "message": "Alle Daten geloescht"}
-
-
-@router.post("/api/demo-data/dismiss-welcome")
-def dismiss_welcome():
-    db = get_db()
-    db.execute(
-        "INSERT OR REPLACE INTO settings (key, value) VALUES ('welcome_dismissed', 'true')"
-    )
-    db.commit()
-    db.close()
-    return {"ok": True}
-
-
-def _generate_demo_photos():
-    """Download demo photos or generate Pillow avatars as fallback."""
-    PHOTOS_DIR.mkdir(parents=True, exist_ok=True)
-    sources = [
+    # --- Generate demo photos ---
+    photos = generate_demo_photos([
         (1, "Anna Mueller", "https://randomuser.me/api/portraits/women/44.jpg", "#6366f1"),
         (2, "Tobias Schmidt", "https://randomuser.me/api/portraits/men/32.jpg", "#0891b2"),
         (3, "Lisa Weber", "https://randomuser.me/api/portraits/women/68.jpg", "#d946ef"),
-    ]
-    photos = {}
-    for emp_id, name, url, fallback_color in sources:
-        filename = f"{emp_id}_demo.jpg"
-        filepath = PHOTOS_DIR / filename
-        try:
-            resp = requests.get(url, timeout=5)
-            if resp.status_code == 200:
-                with open(filepath, "wb") as f:
-                    f.write(resp.content)
-                photos[emp_id] = filename
-                continue
-        except Exception:
-            pass
-        # Fallback: Pillow avatar
-        photos[emp_id] = _generate_avatar(emp_id, name, fallback_color)
-    return photos
-
-
-def _generate_avatar(employee_id, name, bg_color):
-    """Generate a simple avatar image with initials using Pillow."""
-    size = 256
-    img = Image.new("RGB", (size, size), bg_color)
-    draw = ImageDraw.Draw(img)
-    initials = "".join(word[0].upper() for word in name.split()[:2])
-    font_size = 96
-    font = None
-    for font_name in ["segoeui.ttf", "arial.ttf", "DejaVuSans.ttf"]:
-        try:
-            font = ImageFont.truetype(font_name, font_size)
-            break
-        except OSError:
-            continue
-    if font is None:
-        font = ImageFont.load_default()
-    bbox = draw.textbbox((0, 0), initials, font=font)
-    x = (size - (bbox[2] - bbox[0])) / 2 - bbox[0]
-    y = (size - (bbox[3] - bbox[1])) / 2 - bbox[1]
-    draw.text((x, y), initials, fill="white", font=font)
-    filename = f"{employee_id}_demo.jpg"
-    filepath = PHOTOS_DIR / filename
-    img.save(filepath, "JPEG", quality=90)
-    return filename
-
-
-def _delete_demo_photos():
-    """Remove demo photo files from disk."""
-    for f in PHOTOS_DIR.glob("*_demo.*"):
-        f.unlink(missing_ok=True)
-
-
-def _insert_demo_data(db):
-    today = date.today()
-    now = datetime.now().isoformat(timespec="seconds")
-
-    # --- Generate demo photos ---
-    photos = _generate_demo_photos()
+    ])
 
     # --- Employees ---
     db.execute(
@@ -225,14 +70,14 @@ def _insert_demo_data(db):
 
     # --- Project Members ---
     members = [
-        (1, 1, "Lead"),    # Anna → Google Ads
-        (1, 2, "SEO-Support"),  # Tobias → Google Ads
-        (2, 2, "Lead"),    # Tobias → SEO Hub
-        (2, 3, "Content"),  # Lisa → SEO Hub
-        (3, 1, "Strategie"),  # Anna → Newsletter
-        (3, 2, "Analytics"),   # Tobias → Newsletter
-        (3, 3, "Lead"),    # Lisa → Newsletter
-        (4, 1, "Lead"),    # Anna → Black Friday
+        (1, 1, "Lead"),
+        (1, 2, "SEO-Support"),
+        (2, 2, "Lead"),
+        (2, 3, "Content"),
+        (3, 1, "Strategie"),
+        (3, 2, "Analytics"),
+        (3, 3, "Lead"),
+        (4, 1, "Lead"),
     ]
     db.executemany(
         "INSERT INTO project_members (project_id, employee_id, role_in_project) VALUES (?, ?, ?)",
@@ -240,39 +85,36 @@ def _insert_demo_data(db):
     )
 
     # --- Milestones ---
-    d = lambda offset: (today + timedelta(days=offset)).isoformat()
-    past = lambda offset: (today - timedelta(days=offset)).isoformat()
-
     # Project 1: Google Ads (2 done, 1 in_arbeit, 2 offen)
     milestones = [
-        (1, 1, "Konto-Audit abgeschlossen", "done", past(25), past(25), 0),
-        (1, 1, "Neue Kampagnenstruktur aufgesetzt", "done", past(10), past(12), 1),
-        (1, 1, "PMax Kampagnen live", "in_arbeit", d(5), None, 2),
-        (1, 1, "Demand Gen Kampagne launchen", "offen", d(20), None, 3),
-        (1, 1, "Performance Review nach 4 Wochen", "offen", d(40), None, 4),
+        (1, "Konto-Audit abgeschlossen", "done", past(25), past(25), 0),
+        (1, "Neue Kampagnenstruktur aufgesetzt", "done", past(10), past(12), 1),
+        (1, "PMax Kampagnen live", "in_arbeit", d(5), None, 2),
+        (1, "Demand Gen Kampagne launchen", "offen", d(20), None, 3),
+        (1, "Performance Review nach 4 Wochen", "offen", d(40), None, 4),
     ]
     # Project 2: SEO Hub (2 done, 1 OVERDUE, 2 offen)
     milestones += [
-        (2, 2, "Keyword-Recherche fertig", "done", past(30), past(32), 0),
-        (2, 2, "Content-Planung erstellt", "done", past(15), past(16), 1),
-        (2, 2, "10 Landingpages live", "offen", past(3), None, 2),  # OVERDUE
-        (2, 2, "Schema Markup implementiert", "offen", d(15), None, 3),
-        (2, 2, "Interne Verlinkung optimiert", "offen", d(30), None, 4),
+        (2, "Keyword-Recherche fertig", "done", past(30), past(32), 0),
+        (2, "Content-Planung erstellt", "done", past(15), past(16), 1),
+        (2, "10 Landingpages live", "offen", past(3), None, 2),  # OVERDUE
+        (2, "Schema Markup implementiert", "offen", d(15), None, 3),
+        (2, "Interne Verlinkung optimiert", "offen", d(30), None, 4),
     ]
     # Project 3: Newsletter (1 done, 1 in_arbeit, 1 offen)
     milestones += [
-        (3, 3, "Analyse bestehender Newsletter-KPIs", "done", past(14), past(15), 0),
-        (3, 3, "A/B-Test Framework aufsetzen", "in_arbeit", d(3), None, 1),
-        (3, 3, "Segmentierungs-Strategie umsetzen", "offen", d(25), None, 2),
+        (3, "Analyse bestehender Newsletter-KPIs", "done", past(14), past(15), 0),
+        (3, "A/B-Test Framework aufsetzen", "in_arbeit", d(3), None, 1),
+        (3, "Segmentierungs-Strategie umsetzen", "offen", d(25), None, 2),
     ]
     # Project 4: Black Friday (all done)
     milestones += [
-        (4, 4, "Kampagnen-Konzept", "done", "2025-10-15", "2025-10-14", 0),
-        (4, 4, "Creative Assets produziert", "done", "2025-11-01", "2025-10-30", 1),
-        (4, 4, "Kampagnen live", "done", "2025-11-20", "2025-11-19", 2),
-        (4, 4, "Reporting & Learnings", "done", "2025-12-15", "2025-12-10", 3),
+        (4, "Kampagnen-Konzept", "done", "2025-10-15", "2025-10-14", 0),
+        (4, "Creative Assets produziert", "done", "2025-11-01", "2025-10-30", 1),
+        (4, "Kampagnen live", "done", "2025-11-20", "2025-11-19", 2),
+        (4, "Reporting & Learnings", "done", "2025-12-15", "2025-12-10", 3),
     ]
-    for m_id, proj_id, name, status, due, completed, sort in milestones:
+    for proj_id, name, status, due, completed, sort in milestones:
         db.execute(
             """INSERT INTO milestones (project_id, name, status, due_date, completed_at, sort_order)
                VALUES (?, ?, ?, ?, ?, ?)""",
@@ -281,18 +123,14 @@ def _insert_demo_data(db):
 
     # --- KPIs ---
     kpis = [
-        # Project 1: Google Ads
         (1, "ROAS", "3.2", "x", 0),
         (1, "CPA", "28.50", "EUR", 1),
         (1, "Conversion Rate", "4.1", "%", 2),
-        # Project 2: SEO Hub
         (2, "Organischer Traffic", "12.500", "Sessions/Mo", 0),
         (2, "Keyword Rankings Top 10", "23", "Keywords", 1),
         (2, "Seiten indexiert", "8", "von 50", 2),
-        # Project 3: Newsletter
         (3, "Open Rate", "24.3", "%", 0),
         (3, "Click Rate", "3.8", "%", 1),
-        # Project 4: Black Friday
         (4, "Umsatz", "1.2M", "EUR", 0),
         (4, "ROAS", "5.8", "x", 1),
     ]
@@ -303,10 +141,10 @@ def _insert_demo_data(db):
         )
 
     # --- Jour Fixe Sessions ---
-    jf1_started = (datetime.now() - timedelta(days=10, hours=1)).isoformat(timespec="seconds")
-    jf1_completed = (datetime.now() - timedelta(days=10)).isoformat(timespec="seconds")
-    jf2_started = (datetime.now() - timedelta(days=7, hours=1)).isoformat(timespec="seconds")
-    jf2_completed = (datetime.now() - timedelta(days=7)).isoformat(timespec="seconds")
+    jf1_started = past_datetime(10, 1)
+    jf1_completed = past_datetime(10)
+    jf2_started = past_datetime(7, 1)
+    jf2_completed = past_datetime(7)
 
     db.execute(
         """INSERT INTO jourfix_sessions (id, employee_id, started_at, completed_at, general_notes, mood)
@@ -343,24 +181,24 @@ def _insert_demo_data(db):
     db.execute(
         """INSERT INTO notes (employee_id, date, content, type, tags, created_at)
            VALUES (1, ?, 'Budget-Freigabe fuer Q2 klaeren — Vorschlag 15% Erhoehung fuer Demand Gen', 'general', 'Vereinbarung', ?)""",
-        (past(5), (datetime.now() - timedelta(days=5)).isoformat(timespec="seconds")),
+        (past(5), past_datetime(5)),
     )
     db.execute(
         """INSERT INTO notes (employee_id, date, content, type, tags, created_at)
            VALUES (3, ?, 'Lisa hat beim Newsletter-Redesign eigenstaendig ein neues Template entwickelt — sehr gute Initiative', 'general', 'Lob', ?)""",
-        (past(3), (datetime.now() - timedelta(days=3)).isoformat(timespec="seconds")),
+        (past(3), past_datetime(3)),
     )
     db.execute(
         """INSERT INTO notes (employee_id, date, content, type, tags, created_at)
            VALUES (2, ?, 'Tobias moechte sich im Bereich Data Analytics weiterentwickeln. Kurs-Optionen recherchieren.', 'general', 'Entwicklung,Idee', ?)""",
-        (past(12), (datetime.now() - timedelta(days=12)).isoformat(timespec="seconds")),
+        (past(12), past_datetime(12)),
     )
 
     # --- Agreements ---
     db.execute(
         """INSERT INTO agreements (employee_id, project_id, content, status, due_date, created_at, jourfix_id)
            VALUES (1, 1, 'Budget-Vorschlag fuer Q2 Demand Gen erstellen', 'offen', ?, ?, 1)""",
-        (past(2), jf1_completed),  # OVERDUE — due 2 days ago
+        (past(2), jf1_completed),  # OVERDUE
     )
     db.execute(
         """INSERT INTO agreements (employee_id, project_id, content, status, due_date, created_at, jourfix_id)
@@ -370,12 +208,12 @@ def _insert_demo_data(db):
     db.execute(
         """INSERT INTO agreements (employee_id, content, status, due_date, created_at)
            VALUES (3, 'Newsletter-Segmentierungs-Konzept vorstellen', 'offen', ?, ?)""",
-        (d(10), (datetime.now() - timedelta(days=4)).isoformat(timespec="seconds")),
+        (d(10), past_datetime(4)),
     )
     db.execute(
         """INSERT INTO agreements (employee_id, project_id, content, status, due_date, created_at, completed_at, jourfix_id)
            VALUES (1, 1, 'Konto-Audit Ergebnisse praesentieren', 'erledigt', ?, ?, ?, 1)""",
-        (past(20), (datetime.now() - timedelta(days=30)).isoformat(timespec="seconds"), past(22)),
+        (past(20), past_datetime(30), past(22)),
     )
 
     # --- Goals ---
@@ -467,15 +305,15 @@ def _insert_demo_data(db):
     db.execute(
         """INSERT INTO jourfix_agenda (employee_id, project_id, content, created_at)
            VALUES (1, 1, 'Demand Gen Kampagne: Zeitplan und Budget besprechen', ?)""",
-        ((datetime.now() - timedelta(days=1)).isoformat(timespec="seconds"),),
+        (past_datetime(1),),
     )
     db.execute(
         """INSERT INTO jourfix_agenda (employee_id, content, created_at)
            VALUES (2, 'Data Analytics Weiterbildung — konkrete Kurse vorstellen', ?)""",
-        ((datetime.now() - timedelta(days=2)).isoformat(timespec="seconds"),),
+        (past_datetime(2),),
     )
     db.execute(
         """INSERT INTO jourfix_agenda (employee_id, project_id, content, created_at)
            VALUES (3, 3, 'Segmentierungs-Strategie Review vor Umsetzung', ?)""",
-        ((datetime.now() - timedelta(hours=5)).isoformat(timespec="seconds"),),
+        (past_datetime(0, 5),),
     )
