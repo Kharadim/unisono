@@ -83,7 +83,6 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
     try {
       await api.deleteDemoData()
       setShowDeleteDemo(false)
-      localStorage.removeItem('teamlead-username')
       await queryClient.invalidateQueries()
       navigate('/')
     } catch (e) {

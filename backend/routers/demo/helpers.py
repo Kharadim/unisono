@@ -2,6 +2,7 @@ from datetime import date, timedelta, datetime
 from backend.database import PHOTOS_DIR
 from PIL import Image, ImageDraw, ImageFont
 import requests
+import time
 
 
 def d(offset):
@@ -30,9 +31,10 @@ def generate_demo_photos(sources):
     sources: list of (employee_id, name, url, fallback_color)
     """
     PHOTOS_DIR.mkdir(parents=True, exist_ok=True)
+    ts = int(time.time())
     photos = {}
     for emp_id, name, url, fallback_color in sources:
-        filename = f"{emp_id}_demo.jpg"
+        filename = f"{emp_id}_demo_{ts}.jpg"
         filepath = PHOTOS_DIR / filename
         try:
             resp = requests.get(url, timeout=5)
@@ -68,7 +70,7 @@ def generate_avatar(employee_id, name, bg_color):
     x = (size - (bbox[2] - bbox[0])) / 2 - bbox[0]
     y = (size - (bbox[3] - bbox[1])) / 2 - bbox[1]
     draw.text((x, y), initials, fill="white", font=font)
-    filename = f"{employee_id}_demo.jpg"
+    filename = f"{employee_id}_demo_{int(time.time())}.jpg"
     filepath = PHOTOS_DIR / filename
     img.save(filepath, "JPEG", quality=90)
     return filename
@@ -76,5 +78,5 @@ def generate_avatar(employee_id, name, bg_color):
 
 def delete_demo_photos():
     """Remove demo photo files from disk."""
-    for f in PHOTOS_DIR.glob("*_demo.*"):
+    for f in PHOTOS_DIR.glob("*_demo*.*"):
         f.unlink(missing_ok=True)
