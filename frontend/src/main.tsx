@@ -46,6 +46,13 @@ const router = createBrowserRouter(
 function TauriGate({ children }: { children: React.ReactNode }) {
   const w = window as any
   const isTauri = !!(w.__TAURI__ || w.__TAURI_INTERNALS__)
+
+  // Restore port from sessionStorage after page reload (e.g. logout)
+  if (isTauri && !w.__UNISONO_PORT__) {
+    const saved = sessionStorage.getItem('unisono_port')
+    if (saved) w.__UNISONO_PORT__ = Number(saved)
+  }
+
   const [ready, setReady] = useState(!isTauri || !!w.__UNISONO_PORT__)
 
   useEffect(() => {
@@ -54,6 +61,8 @@ function TauriGate({ children }: { children: React.ReactNode }) {
     if ((window as any).__UNISONO_SHUTTING_DOWN__) return
     const interval = setInterval(() => {
       if ((window as any).__UNISONO_PORT__) {
+        // Persist port so it survives page reloads
+        sessionStorage.setItem('unisono_port', String((window as any).__UNISONO_PORT__))
         setReady(true)
         clearInterval(interval)
       }
