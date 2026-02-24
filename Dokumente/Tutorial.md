@@ -7,16 +7,33 @@
 
 ## Inhaltsverzeichnis
 
+0. [Schnellstart: Deine ersten 10 Minuten](#0-schnellstart-deine-ersten-10-minuten)
 1. [Erste Schritte](#1-erste-schritte)
 2. [Das Dashboard](#2-das-dashboard)
 3. [Mitarbeiter verwalten](#3-mitarbeiter-verwalten)
 4. [Projekte verwalten](#4-projekte-verwalten)
 5. [Unter der Woche arbeiten](#5-unter-der-woche-arbeiten)
 6. [Jour Fixe — das Herzstueck](#6-jour-fixe--das-herzstueck)
-7. [Entwicklungsplanung (STEPs)](#7-entwicklungsplanung-steps)
+7. [Entwicklung & Ziele](#7-entwicklung--ziele)
 8. [KI-Assistent](#8-ki-assistent)
 9. [Einstellungen](#9-einstellungen)
 10. [Tipps & Best Practices](#10-tipps--best-practices)
+11. [Loeschen & Konsequenzen](#11-loeschen--konsequenzen)
+
+---
+
+## 0. Schnellstart: Deine ersten 10 Minuten
+
+Du willst sofort loslegen? Hier der kuerzeste Weg:
+
+1. **App starten** → Passwort setzen → deinen Namen eingeben
+2. **Demo-Daten laden** — waehle eine der drei Branchen-Vorlagen (z.B. "Online Marketing")
+3. **Dashboard anschauen** — du siehst sofort dein Team, Projekte und das Aufmerksamkeits-Radar
+4. **Einen Mitarbeiter anklicken** — erkunde die Tabs: Uebersicht, Entwicklung, Notizen, Historie
+5. **Ein Projekt oeffnen** — sieh dir Milestones, KPIs und Vereinbarungen an
+6. **Ein Jour Fixe starten** — klicke "Jour Fixe" auf der Mitarbeiter-Seite und probiere das Zwei-Spalten-Layout aus. Du kannst die Session jederzeit verwerfen, ohne dass etwas gespeichert wird.
+
+Die Onboarding-Tour fuehrt dich automatisch durch die wichtigsten Bereiche. Wenn du tiefer einsteigen willst, lies die folgenden Kapitel.
 
 ---
 
@@ -116,6 +133,8 @@ Alle Projekte gruppiert nach Abteilungen deiner Mitarbeiter. Jede Abteilung zeig
 - Ueberfaellige Milestones als Warndreiecke
 - Abgeschlossene Projekte (eingeklappt, dezent dargestellt)
 
+> **Praxis-Beispiel:** Du oeffnest am Montagmorgen das Dashboard. Das Radar zeigt Lisa mit Score 8 (rot). Die Gruende: "Kein JF seit 32 Tagen", "2 ueberfaellige Vereinbarungen", "Stimmung sinkt". Du weisst sofort: Lisa braucht als naechstes ein Gespraech — und kannst auf ihren Namen klicken, um die Details zu sehen.
+
 ---
 
 ## 3. Mitarbeiter verwalten
@@ -132,7 +151,7 @@ Oben siehst du das Profil deines Mitarbeiters:
 - **Verantwortlichkeiten:** Freitext fuer den Aufgabenbereich
 - **Persoenliches:** Einklappbarer Bereich fuer private Notizen (Hobbys, Familie etc. — nur fuer dich sichtbar)
 
-Klicke auf den Stift zum Bearbeiten, Muelleimer zum Loeschen.
+Klicke auf den Stift zum Bearbeiten, Muelleimer zum Loeschen (siehe [Loeschen & Konsequenzen](#11-loeschen--konsequenzen)).
 
 ### Die vier Tabs
 
@@ -144,30 +163,30 @@ Dieser Tab zeigt dir den operativen Alltag:
 
 **Projekte:** Zeigt alle Projekte, an denen der Mitarbeiter beteiligt ist. Ueber "Projekt" kannst du direkt ein neues Projekt anlegen — der Mitarbeiter wird automatisch als Mitglied hinzugefuegt.
 
-**Offene Punkte:** Dein zentrales Aufgaben-Panel. Hier siehst du:
+**Offene Punkte:** Dein zentrales Aufgaben-Panel. Hier laufen zwei Dinge zusammen:
 - **Vereinbarungen:** Alles was du mit dem Mitarbeiter vereinbart hast (mit optionalem Faelligkeitsdatum und Projektzuordnung). Klicke den Kreis zum Abhaken, den Stift zum Bearbeiten.
-- **Entwicklungsmassnahmen:** Offene Massnahmen aus dem neuesten Entwicklungsplan erscheinen hier automatisch — so hast du operative und strategische Aufgaben an einem Ort.
+- **Entwicklungsmassnahmen:** Offene Massnahmen aus dem neuesten Entwicklungsplan (siehe [Kapitel 7](#7-entwicklung--ziele)) erscheinen hier automatisch.
 
-Ueberfaellige Punkte werden rot hervorgehoben. Die Badge oben zeigt dir sofort, wie viele offen und wie viele ueberfaellig sind.
+So hast du operative Aufgaben (Vereinbarungen) und strategische Aufgaben (Massnahmen) an einem Ort. Ueberfaellige Punkte werden rot hervorgehoben. Die Badge oben zeigt dir sofort, wie viele offen und wie viele ueberfaellig sind.
 
-**JF-Vorbereitung (Agenda):** Sammle unter der Woche Themen fuer das naechste Jour Fixe. Du kannst jedem Thema optional ein Projekt zuordnen. Diese Themen tauchen dann in der JF-Sitzung als Checkliste auf.
+**JF-Vorbereitung (Agenda):** Sammle unter der Woche Themen fuer das naechste Jour Fixe. Du kannst jedem Thema optional ein Projekt zuordnen. Diese Themen tauchen dann in der JF-Sitzung als Checkliste auf (siehe [Kapitel 6](#6-jour-fixe--das-herzstueck)).
 
 #### Tab 2: Entwicklung — "Wohin entwickelt sich der Mitarbeiter?"
 
-Hier findest du den Entwicklungsplan (STEPs) und die Zielvereinbarungen. Ausfuehrlich erklaert in [Kapitel 7](#7-entwicklungsplanung-steps).
+Hier findest du den Entwicklungsplan (STEPs) und die Zielvereinbarungen. Ausfuehrlich erklaert in [Kapitel 7](#7-entwicklung--ziele).
 
 #### Tab 3: Notizen — "Was wurde besprochen?"
 
 Dein Notiz-Archiv fuer diesen Mitarbeiter:
 - **Neue Notiz:** Schreibe Freitext + vergib optional Tags (z.B. "Feedback", "Lob", "Vereinbarung")
 - **Monatsgruppierung:** Notizen werden nach Monat gruppiert. Der aktuelle Monat ist aufgeklappt, aeltere eingeklappt.
-- **JF-Notizen:** Notizen aus Jour-Fixe-Sitzungen werden automatisch hier angezeigt (mit blauem Rand und "Jour Fixe"-Badge)
+- **JF-Notizen:** Notizen aus Jour-Fixe-Sitzungen werden automatisch hier angezeigt (mit blauem Rand und "Jour Fixe"-Badge). Du musst sie nicht manuell uebertragen.
 - **Filter:** Filtere Notizen nach Tags, um z.B. nur Feedback-Notizen zu sehen
 
 #### Tab 4: Historie — "Wie hat sich die Stimmung entwickelt?"
 
 Die JF-Historie zeigt:
-- **Stimmungsverlauf:** Die letzten 12 Jour-Fixe-Stimmungen als Emoji-Reihe
+- **Stimmungsverlauf:** Die letzten 12 Jour-Fixe-Stimmungen als Emoji-Reihe — du erkennst Trends auf einen Blick
 - **Sitzungsliste:** Jede vergangene Sitzung mit Datum, Stimmung, allgemeinen Notizen und Projekt-Notizen. Ueber "Protokoll" kannst du das druckfertige Protokoll oeffnen.
 
 ---
@@ -177,8 +196,8 @@ Die JF-Historie zeigt:
 ### Neues Projekt anlegen
 
 Es gibt zwei Wege:
-1. **Ueber die Mitarbeiter-Seite** (Tab Uebersicht → "Projekt"): Das Projekt wird erstellt und der Mitarbeiter automatisch hinzugefuegt.
-2. **Jedes bestehende Projekt** kann ueber die Team-Sektion weitere Mitglieder bekommen.
+1. **Ueber die Mitarbeiter-Seite** (Tab Uebersicht → "Projekt"): Das Projekt wird erstellt und der Mitarbeiter automatisch als Mitglied hinzugefuegt.
+2. **Jedes bestehende Projekt** kann ueber die Team-Sektion auf der Projektseite weitere Mitglieder bekommen.
 
 ### Projekt-Seite: Aufbau
 
@@ -200,13 +219,12 @@ Der Header zeigt "12/18" — du siehst sofort den Fortschritt.
 
 Key Performance Indicators mit Label, Wert und Einheit:
 - Werte sind inline bearbeitbar (Stift-Icon)
-- Jede Aenderung wird in der **KPI-Historie** protokolliert (Uhr-Icon)
-- Die Historie zeigt: alter Wert → neuer Wert mit Zeitstempel
+- Jede Aenderung wird in der **KPI-Historie** protokolliert (Uhr-Icon) — du siehst: alter Wert → neuer Wert mit Zeitstempel
 - KPIs koennen neu geordnet werden (Pfeile)
 
 #### JF-Notizen — "Was wurde im JF besprochen?"
 
-Zeigt die letzten Gespraechsnotizen aus Jour-Fixe-Sitzungen, die sich auf dieses Projekt beziehen. Inklusive Datum, Mitarbeitername und Tags.
+Zeigt die letzten Gespraechsnotizen aus Jour-Fixe-Sitzungen, die sich auf dieses Projekt beziehen. Inklusive Datum, Mitarbeitername und Tags. So siehst du auf der Projektseite was in den letzten Einzelgespraechen zu diesem Projekt besprochen wurde.
 
 #### Vereinbarungen — "Was wurde vereinbart?"
 
@@ -214,6 +232,8 @@ Vereinbarungen, die diesem Projekt zugeordnet sind. Du kannst:
 - Status toggeln (Kreis klicken: offen ↔ erledigt)
 - Inhalt und Datum inline bearbeiten (Stift-Icon)
 - Erledigte Vereinbarungen ein-/ausblenden
+
+Diese Vereinbarungen erscheinen auch auf der Mitarbeiter-Seite unter "Offene Punkte" — es ist dieselbe Vereinbarung, sichtbar von beiden Seiten.
 
 #### Team (Seitenleiste)
 
@@ -230,7 +250,7 @@ Automatisches Aenderungsprotokoll: Wann wurde der Projektstatus, die Statuszeile
 
 ## 5. Unter der Woche arbeiten
 
-Unisono ist nicht nur fuer Jour Fixes — du kannst jederzeit Daten pflegen. Alle Aenderungen zwischen zwei JFs werden im naechsten JF-Rueckblick angezeigt.
+Unisono ist nicht nur fuer Jour Fixes — du kannst jederzeit Daten pflegen. Aenderungen an Milestones, Vereinbarungen und Entwicklungsmassnahmen werden automatisch getrackt und im naechsten JF-Rueckblick angezeigt.
 
 ### Was kann ich wo bearbeiten?
 
@@ -255,6 +275,18 @@ Wenn du zwischen zwei Jour Fixes Milestones, Vereinbarungen oder Entwicklungsmas
 
 **Wichtig:** Nur inhaltliche Aenderungen werden getrackt. Ein reines Status-Toggle (z.B. Milestone abhaken) zaehlt nicht als Bearbeitung — dafuer gibt es separate Eintraege im Rueckblick ("Erledigte Milestones").
 
+### Szenario: Ein typischer Mittwoch
+
+> Es ist Mittwoch. Du bekommst eine Mail: Der Launch-Termin fuer das SEO-Projekt verschiebt sich um zwei Wochen.
+>
+> 1. Du oeffnest das Projekt in der Sidebar
+> 2. Beim Milestone "Go-Live" klickst du den Stift und aenderst das Datum
+> 3. Du aktualisierst den KPI "Organic Sessions" mit dem neuesten Wert
+> 4. Dir faellt ein, dass du mit Tom darueber sprechen solltest → du gehst auf Toms Mitarbeiter-Seite und traegst unter JF-Vorbereitung ein: "Launch-Verschiebung SEO besprechen"
+> 5. Du erstellst eine neue Vereinbarung fuer Tom: "Neuen Zeitplan fuer Content-Rollout erstellen" mit Faelligkeitsdatum naechste Woche
+>
+> Wenn du am Freitag das Jour Fixe mit Tom startest, zeigt der Rueckblick automatisch: "Milestone 'Go-Live' bearbeitet (SEO-Projekt)". Dein vorbereitetes Thema erscheint als Checklisten-Punkt. Die neue Vereinbarung steht unter "Offene Punkte". Du hast nichts vergessen.
+
 ---
 
 ## 6. Jour Fixe — das Herzstueck
@@ -264,7 +296,7 @@ Das Jour Fixe ist der Kern von Unisono. Es strukturiert dein Einzelgespraech und
 ### Vor dem Gespraech
 
 1. **Themen sammeln:** Unter der Woche auf der Mitarbeiter-Seite (Uebersicht → JF-Vorbereitung) Punkte eintragen. Optional mit Projektzuordnung.
-2. **KI-Briefing (optional):** Wenn KI aktiviert ist, klicke "JF vorbereiten" — die KI fasst die aktuelle Situation zusammen und schlaegt Gespraechspunkte vor.
+2. **KI-Briefing (optional):** Wenn KI aktiviert ist, klicke "JF vorbereiten" — die KI fasst die aktuelle Situation zusammen und schlaegt Gespraechspunkte vor (siehe [Kapitel 8](#8-ki-assistent)).
 
 ### Session starten
 
@@ -289,7 +321,7 @@ Geaenderte Projekte bekommen einen blauen Rand — du siehst sofort, wo du etwas
 
 *Tab "Gespraech":*
 - **Vorbereitete Themen:** Deine Agenda-Punkte als Checkliste. Abgehakte werden nach dem JF automatisch entfernt.
-- **Offene Punkte:** Alle offenen Vereinbarungen + Entwicklungsmassnahmen auf einen Blick. Direkt abhaken wenn besprochen.
+- **Offene Punkte:** Alle offenen Vereinbarungen + Entwicklungsmassnahmen auf einen Blick. Direkt abhaken wenn erledigt.
 - **Allgemeine Notizen:** Projektuebergreifende Gespraechsnotizen + Tags
 
 *Tab "Entwicklung":*
@@ -299,7 +331,7 @@ Geaenderte Projekte bekommen einen blauen Rand — du siehst sofort, wo du etwas
 **Oben: Stimmung & Kontrolle**
 - **Stimmungs-Auswahl:** 5 Emojis von schlecht bis gut
 - **Aenderungs-Zaehler:** Badge zeigt dir, wie viele Aenderungen gesammelt wurden
-- **Auto-Save:** Dein Entwurf wird alle 2 Sekunden lokal gesichert. Bei einem Browser-Crash geht nichts verloren.
+- **Auto-Save:** Dein Entwurf wird alle 2 Sekunden lokal gesichert. Bei einem Absturz geht nichts verloren — beim naechsten Oeffnen wird der Entwurf automatisch wiederhergestellt. Beim Verlassen der Seite mit ungesicherten Aenderungen wirst du gewarnt.
 
 ### Gespraechsleitfaden
 
@@ -318,11 +350,11 @@ Automatisch generiert — zeigt was seit dem letzten JF passiert ist:
 - Erledigte Vereinbarungen
 - Erledigte Milestones
 - KPI-Aenderungen
-- Bearbeitete Milestones, Vereinbarungen und Massnahmen
+- Bearbeitete Milestones, Vereinbarungen und Massnahmen (siehe [Aenderungs-Tracking](#aenderungs-tracking))
 
 ### Abschliessen
 
-Klicke "Abschliessen" — eine Zusammenfassung zeigt alle Aenderungen. Nach Bestaetigung wird alles **in einer Transaktion** gespeichert:
+Klicke "Abschliessen" — eine Zusammenfassung zeigt alle gesammelten Aenderungen. Nach Bestaetigung wird alles zuverlaessig auf einmal gespeichert:
 - Milestone-Status und KPI-Werte werden aktualisiert
 - Neue Milestones, KPIs und Vereinbarungen werden erstellt
 - Ziel-, Massnahmen- und Weiterbildungs-Status werden aktualisiert
@@ -330,36 +362,50 @@ Klicke "Abschliessen" — eine Zusammenfassung zeigt alle Aenderungen. Nach Best
 - Abgehakte Agenda-Punkte werden als besprochen markiert
 - Stimmung wird protokolliert
 
+Es kann nichts "halb gespeichert" werden — entweder alles oder nichts.
+
 Danach erscheint ein Erfolgsbildschirm mit zwei Optionen:
 - **Protokoll anzeigen** — druckfertiges JF-Protokoll
 - **Zurueck zum Mitarbeiter**
 
 ### Protokoll
 
-Das Protokoll ist eine print-optimierte Seite mit allen JF-Ergebnissen:
+Das Protokoll ist eine druckfertige Seite mit allen JF-Ergebnissen:
 - Allgemeine Notizen, Projekt-Notizen (mit Tags), neue Vereinbarungen
 - Aktuelle Ziele, Entwicklungsfelder mit Massnahmen, Weiterbildungen
 - STEPs-Zusammenfassung (Leistung, Talent Pool)
 
 Ueber "Drucken / PDF" kannst du es direkt drucken oder als PDF speichern.
 
-### Sicherheitsnetz
-
-- **Auto-Save:** Entwurf wird alle 2 Sekunden im Browser gespeichert
-- **Crash-Recovery:** Nach einem Absturz wird der Entwurf automatisch wiederhergestellt
-- **Navigationsschutz:** Beim Verlassen der Seite mit ungesicherten Aenderungen wirst du gewarnt
+> **Szenario: Dein erstes Jour Fixe**
+>
+> Du hast unter der Woche drei Themen fuer Lisa vorbereitet. Jetzt sitzt ihr zusammen.
+>
+> 1. Du klickst "Jour Fixe" auf Lisas Seite → das Zwei-Spalten-Layout oeffnet sich
+> 2. Rechts siehst du deine drei vorbereiteten Themen als Checkliste
+> 3. Du klappst das erste Projekt auf, besprecht den Fortschritt, hakst einen Milestone ab
+> 4. Du erstellst eine neue Vereinbarung: "Praesentation bis Freitag fertig"
+> 5. Du setzt die Stimmung auf das mittlere Emoji — Lisa ist zufrieden, aber gestresst
+> 6. Du klickst "Abschliessen", checkst die Zusammenfassung, speicherst
+> 7. Du druckst das Protokoll und gibst Lisa eine Kopie
+>
+> Am naechsten Montag zeigt das Dashboard: Lisas letztes JF war vor 3 Tagen. Die Vereinbarung "Praesentation bis Freitag" steht in ihren offenen Punkten. Alles im Griff.
 
 ---
 
-## 7. Entwicklungsplanung (STEPs)
+## 7. Entwicklung & Ziele
 
-Der Entwicklungsplan basiert auf dem STEPs-Framework und dient der strategischen Mitarbeiterentwicklung. Du findest ihn unter Mitarbeiter → Tab "Entwicklung".
+Dieses Kapitel deckt zwei zusammengehoerige Features ab: den **Entwicklungsplan (STEPs)** fuer die strategische Mitarbeiterentwicklung und die **Zielvereinbarungen** fuer konkrete, messbare Ziele. Beides findest du unter Mitarbeiter → Tab "Entwicklung".
 
-### Plan anlegen
+### Entwicklungsplan (STEPs)
 
-Klicke "Neuer Plan" und gib eine Periode an (z.B. "2026"). Du kannst pro Mitarbeiter mehrere Plaene haben — z.B. einen pro Jahr. Der neueste ist aufgeklappt, aeltere werden kompakt dargestellt.
+Der Entwicklungsplan basiert auf dem STEPs-Framework und dient als Gespraechsgrundlage fuer Halbjahres- oder Jahresgespraeche.
 
-### Reflexion
+#### Plan anlegen
+
+Klicke "Neuer Plan" und gib eine Periode an (z.B. "2026"). Du kannst pro Mitarbeiter mehrere Plaene haben — z.B. einen pro Jahr. Der neueste ist aufgeklappt, aeltere werden kompakt dargestellt (z.B. "3 Staerken, 2 Felder").
+
+#### Reflexion
 
 Vier Textfelder fuer die gemeinsame Reflexion:
 - **Aufgabenschwerpunkte:** Was waren die Hauptaufgaben?
@@ -369,11 +415,11 @@ Vier Textfelder fuer die gemeinsame Reflexion:
 
 Aenderungen werden erst beim Klick auf "Speichern" uebernommen.
 
-### Staerken
+#### Staerken
 
 Eine Liste der Staerken des Mitarbeiters. Frei formuliert, inline bearbeitbar. Diese Staerken helfen dir, den Mitarbeiter gezielt einzusetzen.
 
-### Entwicklungsfelder
+#### Entwicklungsfelder
 
 Hier wird es konkret. Jedes Entwicklungsfeld hat:
 - **Titel:** z.B. "Praesentation & Kommunikation"
@@ -383,9 +429,9 @@ Hier wird es konkret. Jedes Entwicklungsfeld hat:
 
 Massnahmen haben einen Dreier-Status-Zyklus: **Offen → In Arbeit → Erledigt**. Ueberfaellige Massnahmen werden rot markiert.
 
-**Wichtig:** Offene Massnahmen aus dem neuesten Plan erscheinen automatisch auf dem Uebersicht-Tab unter "Offene Punkte" — direkt neben den Vereinbarungen. So hast du operative und strategische Aufgaben an einem Ort.
+**Wichtig:** Offene Massnahmen aus dem neuesten Plan erscheinen automatisch auf dem Uebersicht-Tab unter "Offene Punkte" — direkt neben den Vereinbarungen. So gehen strategische Aufgaben im Tagesgeschaeft nicht unter.
 
-### Leistung & Potenzial (STEPs-Bewertung)
+#### Leistung & Potenzial (STEPs-Bewertung)
 
 Strukturierte Einschaetzung in vier Bereichen:
 
@@ -396,13 +442,51 @@ Strukturierte Einschaetzung in vier Bereichen:
 | **Talent Pool** | Kein Wert / Horizontal / Vertikal |
 | **Mobilitaet** | Ja/Nein, bei Ja: Regional/National/International + Standorte |
 
-### Weiterbildungen
+#### Weiterbildungen
 
 Trainings und Schulungen mit eigenem Status-Zyklus: **Vorgeschlagen → Genehmigt → Abgeschlossen**. Jede Weiterbildung kann Anbieter, Kosten und Faelligkeitsdatum haben.
 
-### Anmerkungen
+#### Anmerkungen
 
 Ein allgemeines Freitextfeld fuer Bemerkungen zum Plan.
+
+### Zielvereinbarungen
+
+Zielvereinbarungen sind konkrete, messbare Ziele — unabhaengig vom Entwicklungsplan. Sie eignen sich fuer Quartalsziele, Jahresziele oder projektuebergreifende Vorgaben.
+
+#### Ziel anlegen
+
+Klicke "Ziel" und fuelle aus:
+- **Titel:** z.B. "Zertifizierung Google Ads bis Q3"
+- **Beschreibung:** Optionale Details
+- **Kategorie:** Fachlich, Persoenlich oder Fuehrung
+- **Faelligkeitsdatum**
+- **Periode:** z.B. "2026" oder "Q1 2026" — Ziele werden nach Perioden gruppiert
+
+#### Status-Zyklus
+
+Ziele haben vier Zustaende:
+- **Offen** → **In Arbeit** → **Erreicht** (Dreifach-Toggle durch Klick auf das Status-Icon)
+- **Nicht erreicht** (separater Button) — fuer Ziele die bewusst als nicht geschafft markiert werden
+
+#### Wo erscheinen Ziele?
+
+- **Mitarbeiter → Entwicklung:** Vollstaendige Ansicht mit allen Details, gruppiert nach Periode
+- **Jour Fixe → Sidebar (Tab "Entwicklung"):** Status-Toggle waehrend des Gespraeches
+- **JF-Protokoll:** Aktuelle Ziele mit Status, Kategorie und Faelligkeit
+
+#### Entwicklungsplan vs. Zielvereinbarungen — Was nutze ich wann?
+
+| | Entwicklungsplan (STEPs) | Zielvereinbarungen |
+|---|---|---|
+| **Zweck** | Langfristige Mitarbeiterentwicklung | Konkrete, messbare Ziele |
+| **Typischer Zeitraum** | 1 Jahr | Quartal bis Jahr |
+| **Beispiel** | Entwicklungsfeld "Kommunikation" mit Massnahme "Praesentationstraining besuchen" | "Zertifizierung Google Ads bis Q3" |
+| **Erscheint in Offene Punkte** | Ja (Massnahmen) | Nein |
+| **Im JF besprechbar** | Ja (Tab "Entwicklung") | Ja (Tab "Entwicklung") |
+| **Wann anlegen** | Jahresgespraech, Onboarding | Quartalsbeginn, nach Bedarf |
+
+Du kannst beides parallel nutzen. Massnahmen aus dem Entwicklungsplan koennen sogar mit Zielen verknuepft werden.
 
 ---
 
@@ -423,7 +507,7 @@ Oeffne die KI-Einstellungen ueber "KI-Assistent" in der Sidebar. Waehle deinen P
 
 **Fuer maximalen Datenschutz:** Waehle Ollama. Die KI laeuft komplett auf deinem Rechner, nichts verlasst das Geraet. Empfohlene Modelle: qwen2.5:7b (4.7 GB) oder gemma3 (8 GB).
 
-**Fuer beste Qualitaet:** Waehle einen Cloud-Provider. Du benoetigst einen eigenen API-Key (BYOK = Bring Your Own Key). Beim ersten Senden erscheint eine Datenschutz-Warnung, die erklaert welche Mitarbeiterdaten uebermittelt werden.
+**Fuer beste Qualitaet:** Waehle einen Cloud-Provider. Du benoetigst einen eigenen API-Schluessel von dem jeweiligen Anbieter. Beim ersten Senden erscheint eine Datenschutz-Warnung, die erklaert welche Mitarbeiterdaten uebermittelt werden. Du musst aktiv zustimmen, bevor Daten gesendet werden.
 
 ### Chat-Widget
 
@@ -439,7 +523,7 @@ Beispielfragen:
 
 ### JF-Briefing
 
-Auf der Mitarbeiter-Seite erscheint ein "JF vorbereiten"-Button (Sparkles-Icon). Die KI analysiert:
+Auf der Mitarbeiter-Seite erscheint ein "JF vorbereiten"-Button. Die KI analysiert:
 - Letzte JF-Sitzungen und deren Ergebnisse
 - Offene Vereinbarungen und Massnahmen
 - Ziele und Entwicklungsplan
@@ -460,11 +544,11 @@ Tags helfen dir, Notizen zu kategorisieren. Oeffne "Tags verwalten" in der Sideb
 - Aendere Reihenfolge, Namen und Farben
 - Loeschen eines Tags entfernt ihn auch aus allen bestehenden Notizen
 
-Tags kannst du auf **Gespraechsnotizen** im JF und auf **allgemeine Notizen** setzen. Auf dem Notizen-Tab kannst du nach Tags filtern.
+Tags kannst du auf **Gespraechsnotizen** im JF und auf **allgemeine Notizen** setzen. Auf dem Notizen-Tab kannst du nach Tags filtern — praktisch um z.B. alle Feedback-Gespraeche eines Mitarbeiters auf einen Blick zu sehen.
 
 ### Passwort aendern
 
-Ueber die Sidebar: Altes Passwort eingeben, neues setzen. Ein neuer Session-Token wird automatisch generiert.
+Ueber die Sidebar: Altes Passwort eingeben, neues setzen. Danach musst du dich nicht neu einloggen — die Session bleibt aktiv.
 
 ### Name aendern
 
@@ -472,7 +556,11 @@ Der angezeigte Name auf dem Splash-Screen. Klicke auf das Stift-Icon neben deine
 
 ### Datenschutz
 
-Eine Info-Seite, die erklaert wie Unisono mit deinen Daten umgeht. Erreichbar ueber das Schild-Icon in der Sidebar.
+Erreichbar ueber das Schild-Icon in der Sidebar. Die Datenschutz-Seite erklaert:
+- **Wo deine Daten liegen:** Lokal auf deinem Rechner, in einem geschuetzten App-Verzeichnis
+- **Was gespeichert wird:** Mitarbeiterdaten, Projekte, Notizen, Jour-Fixe-Protokolle
+- **KI-Datenverarbeitung:** Was bei Cloud-Providern gesendet wird und was bei Ollama lokal bleibt
+- **Keine Telemetrie:** Unisono sendet keine Nutzungsdaten, keine Analytics, keine Crash-Reports
 
 ---
 
@@ -484,7 +572,7 @@ Ein bewaehrter Arbeitsablauf:
 
 | Wann | Was tun | Wo in Unisono |
 |------|---------|---------------|
-| **Montag** | Dashboard checken: Wer braucht Aufmerksamkeit? Welche Termine stehen an? | Dashboard → Radar |
+| **Montag** | Dashboard checken: Wer braucht Aufmerksamkeit? | Dashboard → Radar |
 | **Unter der Woche** | Themen fuer JFs sammeln, sobald sie aufkommen | Mitarbeiter → Uebersicht → JF-Vorbereitung |
 | **Vor dem JF** | KI-Briefing lesen (optional), offene Punkte pruefen | Mitarbeiter → "JF vorbereiten" |
 | **Im JF** | Jour Fixe durchfuehren, alles direkt in Unisono erfassen | Jour Fixe Seite |
@@ -507,7 +595,7 @@ Die 5 Emojis im JF sind mehr als Deko:
 ### Entwicklungsplan als Fuehrungsinstrument
 
 - **Ein Plan pro Jahr** als Gespraechsgrundlage fuer Halbjahres-/Jahresgespraeche
-- **Massnahmen konkret formulieren:** "React-Kurs bis Q2" statt "Weiterentwicklung Frontend"
+- **Massnahmen konkret formulieren:** "Praesentationstraining bis Q2" statt "Weiterentwicklung Kommunikation"
 - **Offene Massnahmen** erscheinen automatisch in den "Offenen Punkten" — so gehen sie nicht unter
 - **Im JF besprechen:** Der Entwicklungs-Tab in der JF-Seitenleiste zeigt Massnahmen und Weiterbildungen zum Durchsprechen
 
@@ -519,6 +607,65 @@ Das Suchfeld in der Sidebar filtert gleichzeitig Mitarbeiter und Projekte. Tippe
 
 Lade die Demo-Daten, experimentiere frei, und entferne sie wieder wenn du bereit bist, mit echten Daten zu arbeiten. Die Demo-Daten zeigen realistische Szenarien mit absichtlichen "Problemfaellen" (ueberfaellige Punkte, schlechte Stimmung), damit du alle Features kennenlernst.
 
+> **Szenario: Halbjahresgespraech vorbereiten**
+>
+> Ende Juni steht das Halbjahresgespraech mit Tom an. So bereitest du dich vor:
+>
+> 1. **Historie-Tab:** Scrolle durch die letzten 6 JF-Sitzungen — wie hat sich die Stimmung entwickelt? Welche Themen kamen immer wieder?
+> 2. **Notizen-Tab:** Filtere nach Tag "Feedback" — was hast du Tom in den letzten Monaten zurueckgemeldet?
+> 3. **Entwicklung-Tab:** Pruefe den STEPs-Plan — welche Massnahmen sind erledigt, welche offen? Wie sieht die Leistungseinschaetzung aus?
+> 4. **Zielvereinbarungen:** Welche Ziele hat Tom fuer Q1/Q2 erreicht, welche nicht?
+> 5. **KI-Briefing:** Lass dir eine Zusammenfassung generieren — die KI sieht alle Daten und fasst die Lage zusammen.
+>
+> Mit diesen 5 Schritten hast du in 10 Minuten einen vollstaendigen Ueberblick ueber ein halbes Jahr Zusammenarbeit.
+
+---
+
+## 11. Loeschen & Konsequenzen
+
+Unisono fragt bei allen Loeschvorgaengen per Dialog nach Bestaetigung. Trotzdem gut zu wissen, was dabei passiert:
+
+### Mitarbeiter loeschen
+
+Entfernt den Mitarbeiter und alle zugehoerigen Daten:
+- Alle Notizen, Vereinbarungen, Zielvereinbarungen
+- Alle JF-Sitzungen und Protokolle
+- Entwicklungsplaene (mit Staerken, Feldern, Massnahmen, Weiterbildungen)
+- Foto
+- Mitgliedschaften in Projekten (die Projekte selbst bleiben bestehen)
+
+**Nicht rueckgaengig zu machen.** Wenn du unsicher bist, schreibe vorher eine Notiz mit den wichtigsten Informationen, die du behalten willst.
+
+### Projekt loeschen
+
+Entfernt das Projekt und alle zugehoerigen Daten:
+- Alle Milestones (mit Status-Historie)
+- Alle KPIs (mit Werte-Historie)
+- Alle Teammitgliedschaften (die Mitarbeiter selbst bleiben bestehen)
+- Projektzuordnung wird von betroffenen Vereinbarungen und JF-Notizen entfernt
+
+**Nicht rueckgaengig zu machen.**
+
+### Einzelne Elemente loeschen
+
+| Element | Was passiert |
+|---------|-------------|
+| **Milestone** | Wird entfernt, verschwindet aus Fortschrittsanzeige |
+| **KPI** | Wird entfernt, inklusive Werte-Historie |
+| **Vereinbarung** | Wird entfernt — von Mitarbeiter- und Projektseite |
+| **Notiz** | Wird entfernt (inkl. Tags) |
+| **Ziel** | Wird entfernt |
+| **Entwicklungsfeld** | Wird mit allen Massnahmen entfernt |
+| **Massnahme** | Wird entfernt, verschwindet aus "Offene Punkte" |
+| **Weiterbildung** | Wird entfernt |
+| **Staerke** | Wird entfernt |
+| **Tag** | Wird entfernt — auch von allen Notizen die diesen Tag hatten |
+| **Agenda-Punkt** | Wird entfernt (oder automatisch nach JF) |
+
+### Demo-Daten entfernen
+
+Loescht **alle** Daten in der App — nicht nur die Demo-Daten. Die App ist danach komplett leer (wie nach einer Neuinstallation). Dein Passwort und dein Name bleiben bestehen.
+
 ---
 
 ## Glossar
@@ -526,15 +673,17 @@ Lade die Demo-Daten, experimentiere frei, und entferne sie wieder wenn du bereit
 | Begriff | Bedeutung |
 |---------|-----------|
 | **Jour Fixe (JF)** | Regelmaessiges Einzelgespraech zwischen Teamlead und Mitarbeiter |
-| **Changeset** | Alle Aenderungen aus einem JF werden gebuendelt und in einem Schritt gespeichert |
 | **Milestone** | Meilenstein eines Projekts mit Status und optionalem Faelligkeitsdatum |
-| **KPI** | Kennzahl (Key Performance Indicator) eines Projekts |
+| **KPI** | Kennzahl (Key Performance Indicator) — messbare Groesse eines Projekts |
 | **Vereinbarung** | Absprache mit einem Mitarbeiter, optional einem Projekt zugeordnet |
+| **Offene Punkte** | Sammelansicht: offene Vereinbarungen + Entwicklungsmassnahmen |
 | **Entwicklungsfeld** | Bereich in dem sich ein Mitarbeiter weiterentwickeln soll |
 | **Massnahme** | Konkreter Schritt innerhalb eines Entwicklungsfeldes |
 | **STEPs** | Framework fuer den strukturierten Entwicklungsplan |
-| **Stimmung / Mood** | 5-stufige Stimmungseinschaetzung im JF (1 = schlecht, 5 = gut) |
-| **Aufmerksamkeits-Radar** | Automatische Scoring-Logik die zeigt, welche MA Aufmerksamkeit brauchen |
-| **Tag** | Farbige Markierung auf Notizen zur Kategorisierung |
+| **Zielvereinbarung** | Konkretes, messbares Ziel mit Kategorie, Status und Faelligkeit |
+| **Stimmung / Mood** | 5-stufige Stimmungseinschaetzung im JF (schlecht bis gut) |
+| **Aufmerksamkeits-Radar** | Automatisches Scoring das zeigt, welche Mitarbeiter Aufmerksamkeit brauchen |
+| **Tag** | Farbige Markierung auf Notizen zur Kategorisierung und Filterung |
 | **Onboarding-Tour** | Gefuehrte Tooltips die die wichtigsten Bereiche erklaeren |
-| **Sidecar** | Technisch: Das Python-Backend laeuft als eigenstaendiger Prozess neben der App |
+| **Ueberfaellig / Overdue** | Faelligkeitsdatum ueberschritten und noch nicht erledigt — wird rot hervorgehoben |
+| **Inline-Edit** | Bearbeitung direkt in der Ansicht (Stift-Icon beim Hovern) ohne separates Formular |
