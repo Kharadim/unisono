@@ -52,6 +52,10 @@ function TauriGate({ children }: { children: React.ReactNode }) {
     const saved = sessionStorage.getItem('unisono_port')
     if (saved) w.__UNISONO_PORT__ = Number(saved)
   }
+  // Persist port so it survives future reloads
+  if (isTauri && w.__UNISONO_PORT__) {
+    sessionStorage.setItem('unisono_port', String(w.__UNISONO_PORT__))
+  }
 
   const [ready, setReady] = useState(!isTauri || !!w.__UNISONO_PORT__)
 
