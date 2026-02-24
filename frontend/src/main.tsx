@@ -10,6 +10,7 @@ import { ProjectHistoryPage } from '@/pages/ProjectHistoryPage'
 import { JourFixePage } from '@/pages/JourFixePage'
 import { JourFixProtocolPage } from '@/pages/JourFixProtocolPage'
 import { DatenschutzPage } from '@/pages/DatenschutzPage'
+import { HelpPage } from '@/pages/HelpPage'
 import './index.css'
 
 const queryClient = new QueryClient({
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path="/projects/:id/history" element={<ProjectHistoryPage />} />
       <Route path="/jourfix/:employeeId" element={<JourFixePage />} />
       <Route path="/jourfix/:sessionId/protocol" element={<JourFixProtocolPage />} />
+      <Route path="/hilfe" element={<HelpPage />} />
       <Route path="/datenschutz" element={<DatenschutzPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Route>

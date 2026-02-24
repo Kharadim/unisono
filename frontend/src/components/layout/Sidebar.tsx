@@ -10,7 +10,7 @@ import { TagSettings } from '@/components/layout/TagSettings'
 import { KISettings } from '@/components/layout/KISettings'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { TemplatePickerDialog } from '@/components/dashboard/TemplatePickerDialog'
-import { Handshake, LayoutDashboard, Users, FolderKanban, Plus, Search, Settings, Bot, Play, Trash2, Shield, LogOut, KeyRound, Eye, EyeOff, Database, UserPen } from 'lucide-react'
+import { Handshake, LayoutDashboard, Users, FolderKanban, Plus, Search, Settings, Bot, Play, Trash2, Shield, LogOut, KeyRound, Eye, EyeOff, Database, UserPen, HelpCircle } from 'lucide-react'
 import type { Employee, Project } from '@/types'
 
 interface SidebarProps {
@@ -306,6 +306,18 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
           <UserPen className="h-4 w-4" />
           Name aendern
         </button>
+        <Link
+          to="/hilfe"
+          onClick={handleLink}
+          className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors w-full ${
+            isActive('/hilfe')
+              ? 'bg-sidebar-active text-white'
+              : 'text-sidebar-muted-foreground hover:bg-sidebar-accent hover:text-white'
+          }`}
+        >
+          <HelpCircle className="h-4 w-4" />
+          Hilfe
+        </Link>
         <Link
           to="/datenschutz"
           onClick={handleLink}
