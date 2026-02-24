@@ -22,7 +22,7 @@ import {
 } from 'lucide-react'
 import type { Project, Milestone, KPI, Employee, StatusHistoryEntry, KPIHistoryEntry } from '@/types'
 
-function MilestoneItem({ milestone, onToggle, onDelete, onMoveUp, onMoveDown, isFirst, isLast }: {
+function MilestoneItem({ milestone, onToggle, onDelete, onMoveUp, onMoveDown, isFirst, isLast, onStartEdit, onSaveEdit, editing, editForm, setEditForm, onCancelEdit }: {
   milestone: Milestone
   onToggle: () => void
   onDelete: () => void
@@ -30,8 +30,41 @@ function MilestoneItem({ milestone, onToggle, onDelete, onMoveUp, onMoveDown, is
   onMoveDown: () => void
   isFirst: boolean
   isLast: boolean
+  onStartEdit: () => void
+  onSaveEdit: () => void
+  editing: boolean
+  editForm: { name: string; due_date: string }
+  setEditForm: (f: { name: string; due_date: string }) => void
+  onCancelEdit: () => void
 }) {
   const overdue = milestone.status !== 'done' && isOverdue(milestone.due_date)
+
+  if (editing) {
+    return (
+      <div className="flex items-center gap-2 p-3 rounded-md border">
+        <Input
+          value={editForm.name}
+          onChange={e => setEditForm({ ...editForm, name: e.target.value })}
+          placeholder="Name"
+          className="flex-1"
+          autoFocus
+        />
+        <Input
+          type="date"
+          value={editForm.due_date}
+          onChange={e => setEditForm({ ...editForm, due_date: e.target.value })}
+          className="w-40"
+        />
+        <Button size="sm" onClick={onSaveEdit} disabled={!editForm.name.trim()} title="Speichern">
+          <Save className="h-3.5 w-3.5" />
+        </Button>
+        <Button size="sm" variant="ghost" onClick={onCancelEdit} title="Abbrechen">
+          <X className="h-3.5 w-3.5" />
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className={cn(
       'flex items-center gap-3 p-3 rounded-md border',
@@ -66,6 +99,13 @@ function MilestoneItem({ milestone, onToggle, onDelete, onMoveUp, onMoveDown, is
           <ChevronDown className="h-3.5 w-3.5" />
         </button>
       </div>
+      <button
+        onClick={onStartEdit}
+        className="text-muted-foreground hover:text-foreground"
+        title="Bearbeiten"
+      >
+        <Edit2 className="h-3.5 w-3.5" />
+      </button>
       <button onClick={onDelete} className="text-muted-foreground hover:text-destructive" title="Löschen">
         <Trash2 className="h-3.5 w-3.5" />
       </button>
@@ -99,6 +139,10 @@ export function ProjectPage() {
   const [kpiHistory, setKpiHistory] = useState<KPIHistoryEntry[]>([])
   const [showAllNotes, setShowAllNotes] = useState(false)
   const [showDoneAgreements, setShowDoneAgreements] = useState(false)
+  const [editingMilestone, setEditingMilestone] = useState<number | null>(null)
+  const [milestoneForm, setMilestoneForm] = useState({ name: '', due_date: '' })
+  const [editingAgreement, setEditingAgreement] = useState<number | null>(null)
+  const [agreementForm, setAgreementForm] = useState({ content: '', due_date: '' })
 
   const { data: project, isLoading } = useQuery<Project>({
     queryKey: ['project', projectId],
@@ -153,6 +197,11 @@ export function ProjectPage() {
     onSuccess: invalidate,
   })
 
+  const updateMilestoneMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: any }) => api.updateMilestone(id, data),
+    onSuccess: () => { invalidate(); setEditingMilestone(null) },
+  })
+
   const createKPIMutation = useMutation({
     mutationFn: (data: any) => api.createKPI(projectId, data),
     onSuccess: () => { invalidate(); setShowNewKPI(false); setNewKPI({ label: '', value: '', unit: '' }) },
@@ -199,6 +248,11 @@ export function ProjectPage() {
   const toggleAgreementMutation = useMutation({
     mutationFn: (id: number) => api.toggleAgreement(id),
     onSuccess: invalidate,
+  })
+
+  const updateAgreementMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: any }) => api.updateAgreement(id, data),
+    onSuccess: () => { invalidate(); setEditingAgreement(null) },
   })
 
   const startEditing = () => {
@@ -328,6 +382,12 @@ export function ProjectPage() {
                       onMoveDown={() => moveMilestone(i, 'down')}
                       isFirst={i === 0}
                       isLast={i === project.milestones.length - 1}
+                      editing={editingMilestone === ms.id}
+                      editForm={milestoneForm}
+                      setEditForm={setMilestoneForm}
+                      onStartEdit={() => { setEditingMilestone(ms.id); setMilestoneForm({ name: ms.name, due_date: ms.due_date || '' }) }}
+                      onSaveEdit={() => updateMilestoneMutation.mutate({ id: ms.id, data: { name: milestoneForm.name, due_date: milestoneForm.due_date || null } })}
+                      onCancelEdit={() => setEditingMilestone(null)}
                     />
                   ))}
                 </div>
@@ -526,9 +586,37 @@ export function ProjectPage() {
                     <div className="space-y-2">
                       {open.map((a: any) => {
                         const overdue = a.due_date && a.due_date !== '' && isOverdue(a.due_date)
+                        if (editingAgreement === a.id) {
+                          return (
+                            <div key={a.id} className="p-3 rounded-md border space-y-2">
+                              <Input
+                                value={agreementForm.content}
+                                onChange={e => setAgreementForm({ ...agreementForm, content: e.target.value })}
+                                placeholder="Vereinbarung"
+                                autoFocus
+                              />
+                              <div className="flex gap-2">
+                                <Input
+                                  type="date"
+                                  value={agreementForm.due_date}
+                                  onChange={e => setAgreementForm({ ...agreementForm, due_date: e.target.value })}
+                                  className="w-40"
+                                />
+                                <Button
+                                  size="sm"
+                                  onClick={() => updateAgreementMutation.mutate({ id: a.id, data: { content: agreementForm.content, due_date: agreementForm.due_date || undefined } })}
+                                  disabled={!agreementForm.content.trim()}
+                                >
+                                  <Save className="h-3.5 w-3.5 mr-1" />Speichern
+                                </Button>
+                                <Button size="sm" variant="ghost" onClick={() => setEditingAgreement(null)}>Abbrechen</Button>
+                              </div>
+                            </div>
+                          )
+                        }
                         return (
                           <div key={a.id} className={cn(
-                            'flex items-start gap-3 p-3 rounded-md border',
+                            'flex items-start gap-3 p-3 rounded-md border group',
                             overdue && 'border-destructive/50 bg-destructive/5'
                           )}>
                             <button
@@ -550,6 +638,13 @@ export function ProjectPage() {
                                 )}
                               </div>
                             </div>
+                            <button
+                              onClick={() => { setEditingAgreement(a.id); setAgreementForm({ content: a.content, due_date: a.due_date || '' }) }}
+                              className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-foreground flex-shrink-0"
+                              title="Bearbeiten"
+                            >
+                              <Edit2 className="h-3.5 w-3.5" />
+                            </button>
                           </div>
                         )
                       })}

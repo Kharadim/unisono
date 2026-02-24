@@ -36,23 +36,32 @@ def update_milestone(milestone_id: int, data: MilestoneUpdate):
 
     current = dict(row)
     updates = data.model_dump(exclude_unset=True)
+
+    # Track if name or due_date changed (for updated_at)
+    content_changed = (
+        ("name" in updates and updates["name"] != row["name"]) or
+        ("due_date" in updates and updates["due_date"] != row["due_date"])
+    )
+
     for key, val in updates.items():
         current[key] = val
+
+    updated_at_sql = ", updated_at=datetime('now')" if content_changed else ""
 
     # Set completed_at when done
     completed_at = current.get("completed_at")
     if current["status"] == "done" and not completed_at:
         completed_at = "datetime('now')"
         db.execute(
-            """UPDATE milestones SET name=?, status=?, due_date=?, sort_order=?,
-               completed_at=datetime('now') WHERE id=?""",
+            f"""UPDATE milestones SET name=?, status=?, due_date=?, sort_order=?,
+               completed_at=datetime('now'){updated_at_sql} WHERE id=?""",
             (current["name"], current["status"], current["due_date"], current["sort_order"], milestone_id),
         )
     else:
         if current["status"] != "done":
             completed_at = None
         db.execute(
-            "UPDATE milestones SET name=?, status=?, due_date=?, sort_order=?, completed_at=? WHERE id=?",
+            f"UPDATE milestones SET name=?, status=?, due_date=?, sort_order=?, completed_at=?{updated_at_sql} WHERE id=?",
             (current["name"], current["status"], current["due_date"], current["sort_order"], completed_at, milestone_id),
         )
 

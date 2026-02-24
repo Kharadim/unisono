@@ -321,13 +321,18 @@ def update_measure(measure_id: int, data: DevMeasureUpdate):
 
     updates = []
     params = []
+    content_changed = False
     for field in ['content', 'due_date', 'goal_id']:
         val = getattr(data, field)
         if val is not None:
             updates.append(f"{field} = ?")
             params.append(val)
+            if field in ('content', 'due_date'):
+                content_changed = True
 
     if updates:
+        if content_changed:
+            updates.append("updated_at = datetime('now')")
         params.append(measure_id)
         db.execute(f"UPDATE dev_measures SET {', '.join(updates)} WHERE id = ?", params)
         db.commit()

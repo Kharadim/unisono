@@ -65,6 +65,7 @@ def update_agreement(agreement_id: int, data: AgreementUpdate):
         params.append(data.due_date)
 
     if updates:
+        updates.append("updated_at = datetime('now')")
         params.append(agreement_id)
         db.execute(f"UPDATE agreements SET {', '.join(updates)} WHERE id = ?", params)
         db.commit()

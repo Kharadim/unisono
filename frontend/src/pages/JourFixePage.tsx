@@ -235,7 +235,10 @@ export function JourFixePage() {
       const hasData = recapData.last_jf_date && (
         recapData.agreements_completed.length > 0 ||
         recapData.milestones_completed.length > 0 ||
-        recapData.kpi_changes.length > 0
+        recapData.kpi_changes.length > 0 ||
+        (recapData.milestones_edited || []).length > 0 ||
+        (recapData.agreements_edited || []).length > 0 ||
+        (recapData.measures_edited || []).length > 0
       )
       setShowRecap(!!hasData)
     } catch { setRecap(null) }
@@ -274,7 +277,10 @@ export function JourFixePage() {
       const hasData = recapData.last_jf_date && (
         recapData.agreements_completed.length > 0 ||
         recapData.milestones_completed.length > 0 ||
-        recapData.kpi_changes.length > 0
+        recapData.kpi_changes.length > 0 ||
+        (recapData.milestones_edited || []).length > 0 ||
+        (recapData.agreements_edited || []).length > 0 ||
+        (recapData.measures_edited || []).length > 0
       )
       setShowRecap(!!hasData)
     } catch { setRecap(null) }
@@ -778,7 +784,10 @@ export function JourFixePage() {
           const hasAgreements = recap.agreements_completed.length > 0
           const hasMilestones = recap.milestones_completed.length > 0
           const hasKpis = recap.kpi_changes.length > 0
-          const hasAny = hasAgreements || hasMilestones || hasKpis
+          const hasMilestonesEdited = (recap.milestones_edited || []).length > 0
+          const hasAgreementsEdited = (recap.agreements_edited || []).length > 0
+          const hasMeasuresEdited = (recap.measures_edited || []).length > 0
+          const hasAny = hasAgreements || hasMilestones || hasKpis || hasMilestonesEdited || hasAgreementsEdited || hasMeasuresEdited
           return (
             <div className="mb-3">
               <button
@@ -836,6 +845,48 @@ export function JourFixePage() {
                               {k.label}: <span className="text-muted-foreground line-through">{k.old_value} {k.old_unit}</span> → <span className="font-medium">{k.new_value} {k.new_unit}</span>
                             </span>
                             {k.project_name && <Badge variant="secondary" className="text-[10px] ml-auto flex-shrink-0">{k.project_name}</Badge>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {hasMilestonesEdited && (
+                    <div>
+                      <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wide">Bearbeitete Milestones</h4>
+                      <div className="space-y-1">
+                        {recap.milestones_edited.map((m: any, i: number) => (
+                          <div key={i} className="flex items-start gap-2 text-sm">
+                            <Edit2 className="h-3.5 w-3.5 mt-0.5 text-blue-500 flex-shrink-0" />
+                            <span>{m.name}</span>
+                            {m.project_name && <Badge variant="secondary" className="text-[10px] ml-auto flex-shrink-0">{m.project_name}</Badge>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {hasAgreementsEdited && (
+                    <div>
+                      <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wide">Bearbeitete Vereinbarungen</h4>
+                      <div className="space-y-1">
+                        {recap.agreements_edited.map((a: any, i: number) => (
+                          <div key={i} className="flex items-start gap-2 text-sm">
+                            <Edit2 className="h-3.5 w-3.5 mt-0.5 text-blue-500 flex-shrink-0" />
+                            <span>{a.content}</span>
+                            {a.project_name && <Badge variant="secondary" className="text-[10px] ml-auto flex-shrink-0">{a.project_name}</Badge>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {hasMeasuresEdited && (
+                    <div>
+                      <h4 className="text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wide">Bearbeitete Massnahmen</h4>
+                      <div className="space-y-1">
+                        {recap.measures_edited.map((m: any, i: number) => (
+                          <div key={i} className="flex items-start gap-2 text-sm">
+                            <Edit2 className="h-3.5 w-3.5 mt-0.5 text-blue-500 flex-shrink-0" />
+                            <span>{m.content}</span>
+                            {m.area_title && <Badge variant="secondary" className="text-[10px] ml-auto flex-shrink-0">{m.area_title}</Badge>}
                           </div>
                         ))}
                       </div>

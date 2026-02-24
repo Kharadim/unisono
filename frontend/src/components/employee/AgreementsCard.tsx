@@ -36,6 +36,9 @@ export function AgreementsCard({ employeeId, projects }: AgreementsCardProps) {
   const [editDue, setEditDue] = useState('')
   const [editProjectId, setEditProjectId] = useState<string>('')
   const [confirmDelete, setConfirmDelete] = useState<number | null>(null)
+  const [editingMeasure, setEditingMeasure] = useState<number | null>(null)
+  const [measureContent, setMeasureContent] = useState('')
+  const [measureDue, setMeasureDue] = useState('')
 
   const { data: agreements = [] } = useQuery<Agreement[]>({
     queryKey: ['agreements', employeeId],
@@ -101,6 +104,14 @@ export function AgreementsCard({ employeeId, projects }: AgreementsCardProps) {
   const toggleMeasureMutation = useMutation({
     mutationFn: (id: number) => api.toggleDevMeasure(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['devplan', employeeId] }),
+  })
+
+  const updateMeasureMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: any }) => api.updateDevMeasure(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['devplan', employeeId] })
+      setEditingMeasure(null)
+    },
   })
 
   const openAgreements = agreements.filter(a => a.status === 'offen')
@@ -262,9 +273,27 @@ export function AgreementsCard({ employeeId, projects }: AgreementsCardProps) {
             <div className="space-y-2 mb-4">
               {openMeasures.map(m => {
                 const overdue = isOverdue(m.due_date)
+                if (editingMeasure === m.id) {
+                  return (
+                    <div key={`m-${m.id}`} className="p-3 rounded-md border space-y-2">
+                      <Input value={measureContent} onChange={e => setMeasureContent(e.target.value)} placeholder="Massnahme" autoFocus />
+                      <div className="flex gap-2">
+                        <Input type="date" value={measureDue} onChange={e => setMeasureDue(e.target.value)} className="w-40" />
+                        <Button
+                          size="sm"
+                          onClick={() => updateMeasureMutation.mutate({ id: m.id, data: { content: measureContent, due_date: measureDue || undefined } })}
+                          disabled={!measureContent.trim()}
+                        >
+                          <Save className="h-3.5 w-3.5 mr-1" />Speichern
+                        </Button>
+                        <Button size="sm" variant="ghost" onClick={() => setEditingMeasure(null)}>Abbrechen</Button>
+                      </div>
+                    </div>
+                  )
+                }
                 return (
                   <div key={`m-${m.id}`} className={cn(
-                    'flex items-start gap-3 p-3 rounded-md border',
+                    'flex items-start gap-3 p-3 rounded-md border group',
                     overdue && 'border-destructive/50 bg-destructive/5'
                   )}>
                     <button
@@ -289,6 +318,13 @@ export function AgreementsCard({ employeeId, projects }: AgreementsCardProps) {
                         )}
                       </div>
                     </div>
+                    <button
+                      onClick={() => { setEditingMeasure(m.id); setMeasureContent(m.content); setMeasureDue(m.due_date || '') }}
+                      className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-foreground flex-shrink-0"
+                      title="Bearbeiten"
+                    >
+                      <Edit2 className="h-3.5 w-3.5" />
+                    </button>
                   </div>
                 )
               })}

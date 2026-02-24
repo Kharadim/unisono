@@ -288,6 +288,12 @@ def init_db():
         )
     """)
 
+    # Migration: add updated_at column to milestones, agreements, dev_measures
+    for tbl in ['milestones', 'agreements', 'dev_measures']:
+        cols = [row[1] for row in conn.execute(f"PRAGMA table_info({tbl})").fetchall()]
+        if 'updated_at' not in cols:
+            conn.execute(f"ALTER TABLE {tbl} ADD COLUMN updated_at TEXT")
+
     # v2.6 Migration: settings table (key-value store)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS settings (

@@ -515,6 +515,7 @@ def jourfix_recap(employee_id: int):
 
     milestones_completed = []
     kpi_changes = []
+    milestones_edited = []
 
     if proj_ids:
         placeholders = ",".join("?" for _ in proj_ids)
@@ -541,12 +542,46 @@ def jourfix_recap(employee_id: int):
             (*proj_ids, since),
         ).fetchall()
 
+        # Milestones edited since last JF (name/due_date changed outside JF)
+        milestones_edited = db.execute(
+            f"""SELECT m.name, p.name as project_name, m.due_date
+                FROM milestones m
+                JOIN projects p ON p.id = m.project_id
+                WHERE m.project_id IN ({placeholders}) AND m.updated_at > ?
+                ORDER BY m.updated_at DESC""",
+            (*proj_ids, since),
+        ).fetchall()
+
+    # Agreements edited since last JF
+    agreements_edited = db.execute(
+        """SELECT a.content, p.name as project_name, a.due_date
+           FROM agreements a
+           LEFT JOIN projects p ON p.id = a.project_id
+           WHERE a.employee_id = ? AND a.updated_at > ?
+           ORDER BY a.updated_at DESC""",
+        (employee_id, since),
+    ).fetchall()
+
+    # Dev measures edited since last JF
+    measures_edited = db.execute(
+        """SELECT dm.content, da.title as area_title, dm.due_date
+           FROM dev_measures dm
+           JOIN dev_areas da ON da.id = dm.area_id
+           JOIN development_plans dp ON dp.id = da.plan_id
+           WHERE dp.employee_id = ? AND dm.updated_at > ?
+           ORDER BY dm.updated_at DESC""",
+        (employee_id, since),
+    ).fetchall()
+
     db.close()
     return {
         "last_jf_date": since,
         "agreements_completed": [dict(a) for a in agreements_completed],
         "milestones_completed": [dict(m) for m in milestones_completed],
         "kpi_changes": [dict(k) for k in kpi_changes],
+        "milestones_edited": [dict(m) for m in milestones_edited],
+        "agreements_edited": [dict(a) for a in agreements_edited],
+        "measures_edited": [dict(m) for m in measures_edited],
     }
 
 
