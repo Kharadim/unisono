@@ -2,7 +2,7 @@
 function getBase(): string {
   const w = window as any
   if (w.__TAURI__ || w.__TAURI_INTERNALS__) {
-    const port = w.__UNISONO_PORT__ || 8000
+    const port = w.__UNISONO_PORT__ || 8001
     return `http://localhost:${port}/api`
   }
   return '/api'

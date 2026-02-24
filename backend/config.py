@@ -5,7 +5,7 @@ When launched by Tauri sidecar:
   unisono-server --data-dir /path/to/appdata --port 12345
 
 Standalone fallback:
-  python -m uvicorn backend.main:app --port 8000
+  python -m uvicorn backend.main:app --port 8001
   → data lives in backend/data/ (original behavior)
 """
 
@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Defaults (standalone mode — same behavior as original Teamlead)
 _data_dir: Path | None = None
-_port: int = 8000
+_port: int = 8001
 _db_name: str = "unisono.db"
 
 # Parse CLI args (set by Tauri sidecar or unisono_entry.py)

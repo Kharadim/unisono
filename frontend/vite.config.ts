@@ -19,7 +19,7 @@ export default defineConfig({
     host: host || false,
     hmr: host ? { protocol: 'ws', host, port: 1421 } : undefined,
     proxy: {
-      '/api': 'http://localhost:8000',
+      '/api': 'http://localhost:8001',
     },
   },
   clearScreen: false,
