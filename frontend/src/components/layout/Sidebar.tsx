@@ -83,7 +83,7 @@ export function Sidebar({ onNavigate, onStartTour }: SidebarProps) {
     try {
       await api.deleteDemoData()
       setShowDeleteDemo(false)
-      await queryClient.invalidateQueries()
+      await queryClient.refetchQueries()
       navigate('/')
     } catch (e) {
       alert('Fehler: ' + (e as Error).message)

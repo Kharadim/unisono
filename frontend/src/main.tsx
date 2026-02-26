@@ -58,16 +58,22 @@ function TauriGate({ children }: { children: React.ReactNode }) {
   }
 
   const [ready, setReady] = useState(!isTauri || !!w.__UNISONO_PORT__)
+  const [timedOut, setTimedOut] = useState(false)
 
   useEffect(() => {
     if (ready) return
     // Don't poll during shutdown
     if ((window as any).__UNISONO_SHUTTING_DOWN__) return
+
+    const startTime = Date.now()
     const interval = setInterval(() => {
       if ((window as any).__UNISONO_PORT__) {
         // Persist port so it survives page reloads
         sessionStorage.setItem('unisono_port', String((window as any).__UNISONO_PORT__))
         setReady(true)
+        clearInterval(interval)
+      } else if (Date.now() - startTime > 10_000) {
+        setTimedOut(true)
         clearInterval(interval)
       }
     }, 50)
@@ -81,9 +87,13 @@ function TauriGate({ children }: { children: React.ReactNode }) {
     }
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#f8f9fa' }}>
-        <div style={{ textAlign: 'center', color: '#6b7280' }}>
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>⏳</div>
-          <div style={{ fontSize: '14px' }}>Backend wird gestartet...</div>
+        <div style={{ textAlign: 'center', color: timedOut ? '#dc2626' : '#6b7280' }}>
+          <div style={{ fontSize: '24px', marginBottom: '12px' }}>{timedOut ? '!' : ''}</div>
+          <div style={{ fontSize: '14px' }}>
+            {timedOut
+              ? 'Verbindung zum Backend fehlgeschlagen. Bitte App neu starten.'
+              : 'Verbinde mit Backend...'}
+          </div>
         </div>
       </div>
     )

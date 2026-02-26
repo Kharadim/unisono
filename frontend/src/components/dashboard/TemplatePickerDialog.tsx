@@ -27,7 +27,7 @@ export function TemplatePickerDialog({ open, onClose }: TemplatePickerDialogProp
     setLoadingTemplate(key)
     try {
       await api.loadDemoData(key)
-      await queryClient.invalidateQueries()
+      await queryClient.refetchQueries()
       onClose()
       navigate('/')
     } catch (e) {

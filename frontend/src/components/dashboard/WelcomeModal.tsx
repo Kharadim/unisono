@@ -24,7 +24,7 @@ export function WelcomeModal({ onDone }: WelcomeModalProps) {
     setLoadingTemplate(key)
     try {
       await api.loadDemoData(key)
-      await queryClient.invalidateQueries()
+      await queryClient.refetchQueries()
       onDone(true)
     } catch (e) {
       alert('Fehler beim Laden der Demo-Daten: ' + (e as Error).message)

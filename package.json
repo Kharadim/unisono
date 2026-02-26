@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node kill-zombies.js && node ensure-sidecar.js",
-    "dev": "cd src-tauri && cargo tauri dev",
+    "dev": "node dev-server.js",
+    "dev:backend": "python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8001",
     "build": "cd src-tauri && cargo tauri build",
     "build:sidecar": "python -m PyInstaller --onefile --name unisono-server-x86_64-pc-windows-msvc --distpath src-tauri/binaries --specpath build --hidden-import backend.routers.auth --hidden-import backend.routers.employees --hidden-import backend.routers.projects --hidden-import backend.routers.milestones --hidden-import backend.routers.kpis --hidden-import backend.routers.notes --hidden-import backend.routers.jourfix --hidden-import backend.routers.agenda --hidden-import backend.routers.agreements --hidden-import backend.routers.goals --hidden-import backend.routers.tags --hidden-import backend.routers.dashboard --hidden-import backend.routers.settings --hidden-import backend.routers.chat --hidden-import backend.routers.devplan --hidden-import backend.routers.demo --hidden-import uvicorn.logging --hidden-import uvicorn.loops --hidden-import uvicorn.loops.auto --hidden-import uvicorn.protocols --hidden-import uvicorn.protocols.http --hidden-import uvicorn.protocols.http.auto --hidden-import uvicorn.protocols.websockets --hidden-import uvicorn.protocols.websockets.auto --hidden-import uvicorn.lifespan --hidden-import uvicorn.lifespan.on --hidden-import uvicorn.lifespan.off backend/unisono_entry.py",
     "build:all": "npm run build:sidecar && npm run build"
