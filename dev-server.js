@@ -22,25 +22,33 @@ const HEALTH_CHECK_INTERVAL = 300
 const HEALTH_CHECK_TIMEOUT = 15000
 
 // --- Step 1: Kill zombies on known ports ---
+// Checks Vite port + entire backend port range (8001-8020)
 function killZombies() {
-  const ports = [VITE_PORT, BACKEND_PORT_START]
-  for (const port of ports) {
-    try {
-      const output = execSync('netstat -ano', { encoding: 'utf8' })
-      const lines = output.split('\n').filter(l =>
-        (l.includes('LISTENING') || l.includes('ABH')) && l.includes(`:${port} `)
-      )
-      for (const line of lines) {
-        const parts = line.trim().split(/\s+/)
-        const pid = parts[parts.length - 1]
-        if (pid && /^\d+$/.test(pid)) {
-          try {
-            execSync(`taskkill /F /PID ${pid}`, { stdio: 'ignore' })
-            console.log(`[dev] Port ${port}: Zombie-Prozess ${pid} beendet`)
-          } catch { /* already exited */ }
-        }
-      }
-    } catch { /* netstat not available */ }
+  try {
+    const output = execSync('netstat -ano', { encoding: 'utf8' })
+    const lines = output.split('\n').filter(l =>
+      l.includes('LISTENING') || l.includes('ABH')
+    )
+    // Kill Vite zombie
+    killOnPort(lines, VITE_PORT)
+    // Kill any backend zombies in the auto-pick range
+    for (let port = BACKEND_PORT_START; port < BACKEND_PORT_START + 20; port++) {
+      killOnPort(lines, port)
+    }
+  } catch { /* netstat not available */ }
+}
+
+function killOnPort(lines, port) {
+  const matches = lines.filter(l => l.includes(`:${port} `))
+  for (const line of matches) {
+    const parts = line.trim().split(/\s+/)
+    const pid = parts[parts.length - 1]
+    if (pid && /^\d+$/.test(pid)) {
+      try {
+        execSync(`taskkill /F /PID ${pid}`, { stdio: 'ignore' })
+        console.log(`[dev] Port ${port}: Zombie-Prozess ${pid} beendet`)
+      } catch { /* already exited */ }
+    }
   }
 }
 
