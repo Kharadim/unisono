@@ -88,3 +88,7 @@ npm run build:all  # PyInstaller-Sidecar + cargo tauri build
 ## Lizenz
 
 Alle Rechte vorbehalten. Dieses Repository dient als Portfolio-Referenz.
+
+---
+
+*Entwickelt mit Unterstützung von [Claude Code](https://claude.com/claude-code).*
