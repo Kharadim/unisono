@@ -30,3 +30,6 @@ Thumbs.db
 
 # Temp
 test-data/
+
+# Claude Code Projektdoku (nur lokal)
+CLAUDE.md
