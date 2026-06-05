@@ -54,6 +54,11 @@ Profil mit Projekten, offenen Punkten und Jour-Fixe-Vorbereitung:
 
 ![Mitarbeiter-Profil](docs/screenshots/mitarbeiter-profil.png)
 
+### Jour Fixe
+Der geführte 1:1-Workflow: Projekte links, Agenda und offene Punkte rechts — alles wird lokal gesammelt und beim Abschließen atomar gespeichert:
+
+![Jour Fixe](docs/screenshots/jour-fixe.png)
+
 ### Projekt-Seite
 Milestones, KPIs, Jour-Fixe-Notizen und Vereinbarungen an einem Ort:
 
