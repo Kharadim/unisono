@@ -42,7 +42,22 @@ Features: kontextbewusster Chat-Assistent + automatisches Jour-Fixe-Briefing. AP
 
 ## Screenshots
 
-*(folgen)*
+*Alle Screenshots zeigen die mitgelieferten Demo-Daten.*
+
+### Dashboard
+Team-Übersicht mit Aufmerksamkeits-Radar und Projekten nach Abteilung:
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Mitarbeiter-Profil
+Profil mit Projekten, offenen Punkten und Jour-Fixe-Vorbereitung:
+
+![Mitarbeiter-Profil](docs/screenshots/mitarbeiter-profil.png)
+
+### Projekt-Seite
+Milestones, KPIs, Jour-Fixe-Notizen und Vereinbarungen an einem Ort:
+
+![Projekt](docs/screenshots/projekt.png)
 
 ## Tech-Stack
 
