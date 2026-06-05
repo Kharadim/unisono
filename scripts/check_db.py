@@ -11,6 +11,8 @@ for row in conn.execute("SELECT key, value FROM settings").fetchall():
         v = v[:20] + '...' if v else ''
     if k == 'auth_session_token':
         v = v[:10] + '...' if v else ''
+    if k == 'ki_api_key':
+        v = v[:6] + '***' if v else ''
     print(f"  {k} = {v}")
 
 emp = conn.execute("SELECT COUNT(*) FROM employees").fetchone()[0]
